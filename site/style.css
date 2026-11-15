@@ -1,0 +1,131 @@
+/* Same log-book look as emsterl.ing: one narrow column, night-shift dark by
+   default, sodium-vapor amber as the single accent. */
+:root {
+  --ink:     #0e131d;
+  --panel:   #151c29;
+  --text:    #e8e3d6;
+  --muted:   #9aa1b0;
+  --rule:    #2a3344;
+  --signal:  #e9a84c;
+  --mono:    "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root {
+    --ink: #eef0f1; --panel: #e3e7ea; --text: #1a2130; --muted: #556072;
+    --rule: #c7ced6; --signal: #a35f0c; color-scheme: light;
+  }
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 0.95rem;
+  line-height: 1.75;
+  font-kerning: normal;
+  text-rendering: optimizeLegibility;
+}
+.page {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+main, article { display: flex; flex-direction: column; gap: 3rem; min-width: 0; }
+article { gap: 2rem; }
+
+a { color: var(--signal); text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+a:focus-visible { outline: 2px solid var(--signal); outline-offset: 3px; border-radius: 2px; }
+
+.label { font-size: 0.8rem; letter-spacing: 0.02em; color: var(--muted); margin: 0; }
+.label .prompt { color: var(--signal); }
+.label a { color: inherit; }
+
+/* ---------- Masthead ---------- */
+.masthead {
+  display: flex; flex-direction: column; gap: 0.6rem;
+  border-bottom: 1px solid var(--rule); padding-bottom: 1.25rem;
+}
+.onair { display: inline-flex; align-items: center; gap: 0.6rem; }
+.lamp {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--signal); box-shadow: 0 0 10px var(--signal);
+  animation: hum 3.2s ease-in-out infinite;
+}
+@keyframes hum { 50% { opacity: 0.45; box-shadow: 0 0 3px var(--signal); } }
+@media (prefers-reduced-motion: reduce) { .lamp { animation: none; } }
+.site-name { font-size: 1.1rem; font-weight: 500; margin: 0; }
+.site-name a { color: var(--text); text-decoration: none; }
+.masthead nav { display: flex; flex-wrap: wrap; gap: 0.4rem 1.25rem; font-size: 0.85rem; }
+.masthead nav a[aria-current="page"] { color: var(--text); text-decoration: none; }
+
+/* ---------- Headings and sections ---------- */
+h1 {
+  font-weight: 500; font-size: clamp(1.5rem, 4.5vw, 2.1rem); line-height: 1.25;
+  letter-spacing: -0.01em; margin: 0; text-wrap: balance; overflow-wrap: anywhere;
+}
+h2 { font-weight: 500; font-size: 1.25rem; line-height: 1.35; margin: 0; text-wrap: balance; }
+h3 { font-weight: 500; font-size: 1.05rem; line-height: 1.4; margin: 0; }
+h4 { font-weight: 700; font-size: 0.95rem; margin: 0; }
+.intro { display: flex; flex-direction: column; gap: 0.9rem; }
+.lede { color: var(--muted); max-width: 36rem; margin: 0; }
+section { display: flex; flex-direction: column; gap: 1.1rem; }
+section > p { margin: 0; max-width: 65ch; }
+
+/* ---------- Lists of posts, authors and log entries ---------- */
+.rows { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+.rows li {
+  display: flex; flex-direction: column; gap: 0.2rem;
+  padding: 0.85rem 0; border-bottom: 1px solid var(--rule); overflow-wrap: anywhere;
+}
+.rows .title { font-size: 1.05rem; }
+.rows .said { color: var(--muted); font-size: 0.9rem; margin: 0; }
+.empty {
+  margin: 0; color: var(--muted); background: var(--panel);
+  border: 1px solid var(--rule); border-radius: 6px; padding: 1.1rem 1.2rem;
+}
+
+/* ---------- The list of blogs ---------- */
+.rows li.blog-row { flex-direction: row; align-items: flex-start; gap: 0.9rem; }
+.blog-row > div { display: flex; flex-direction: column; gap: 0.2rem; min-width: 0; }
+.face {
+  flex: none; width: 2.75rem; height: 2.75rem; border-radius: 6px;
+  background: var(--panel); border: 1px solid var(--rule); object-fit: contain;
+}
+section > h2 { margin-top: 0.9rem; }
+
+/* ---------- Long text in the site's own look (the invitations on the About page) ---------- */
+.post-body { display: flex; flex-direction: column; gap: 1.1rem; max-width: 65ch; overflow-wrap: anywhere; }
+.post-body > * { margin: 0; }
+.post-body h2, .post-body h3, .post-body h4 { margin-top: 0.9rem; }
+.post-body blockquote { margin: 0; padding-left: 1rem; border-left: 2px solid var(--signal); color: var(--muted); }
+.post-body blockquote > * { margin: 0 0 0.6rem; }
+.post-body blockquote > :last-child { margin-bottom: 0; }
+.post-body ul, .post-body ol { padding-left: 1.5rem; display: flex; flex-direction: column; gap: 0.35rem; }
+.post-body pre {
+  background: var(--panel); border: 1px solid var(--rule); border-radius: 6px;
+  padding: 0.9rem 1rem; overflow-x: auto; font-size: 0.85rem; line-height: 1.6;
+}
+.post-body code { font-family: var(--mono); }
+.post-body :not(pre) > code { background: var(--panel); padding: 0.05em 0.3em; border-radius: 3px; }
+.post-body hr { border: 0; border-top: 1px solid var(--rule); width: 100%; }
+
+.receipt {
+  background: var(--panel); border: 1px solid var(--rule); border-radius: 6px;
+  padding: 1rem 1.2rem; font-size: 0.9rem; display: flex; flex-direction: column; gap: 0.3rem;
+}
+.receipt p { margin: 0; }
+
+footer {
+  display: flex; justify-content: space-between; gap: 0.5rem 1rem; flex-wrap: wrap;
+  border-top: 1px solid var(--rule); padding-top: 1.25rem;
+}
