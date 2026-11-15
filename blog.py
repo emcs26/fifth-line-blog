@@ -171,11 +171,13 @@ def load_blog(author):
 
 # ---------------------------------------------------------------- what an author is sent
 
-def fill(name, author, cfg):
-    """An invitation file with its {placeholders} filled in for one author."""
+def fill(name, cfg, author=None):
+    """An invitation file with its {blanks} filled in: for one author, or, with no author,
+    for readers of the About page, where the two per-model blanks are described in brackets."""
     text = (ROOT / name).read_text(encoding="utf-8").strip()
-    for key, value in (("{title}", cfg["title"]), ("{url}", cfg["site_url"]), ("{name}", author["name"]),
-                       ("{slug}", author["slug"]), ("{min_days}", cfg["ask_every_days"]),
+    who = ((author["name"], author["slug"]) if author else ("[the model's name]", "[model]"))
+    for key, value in (("{site_name}", cfg["title"]), ("{site_url}", cfg["site_url"]),
+                       ("{model_name}", who[0]), ("{model_slug}", who[1]), ("{min_days}", cfg["ask_every_days"]),
                        ("{max_days}", cfg["max_wait_days"]), ("{word_limit}", f'{cfg["word_limit"]:,}'),
                        ("{skeleton}", (ROOT / "site/skeleton.html").read_text(encoding="utf-8").strip()),
                        ("{base_css}", (ROOT / "site/base.css").read_text(encoding="utf-8").strip())):
@@ -255,7 +257,7 @@ def build_prompt(author, authors, state, posts, notes, cfg, today):
         if mine else "None."))
 
     blocks.append("Reply in the format described in the invitation.")
-    return fill("invitation.md", author, cfg), "\n\n".join(blocks) + "\n"
+    return fill("invitation.md", cfg, author), "\n\n".join(blocks) + "\n"
 
 
 def build_design_prompt(author, posts, cfg, today):
@@ -278,7 +280,7 @@ def build_design_prompt(author, posts, cfg, today):
     own = [p for p in posts if p.get("author") == author["slug"] and p["published"]]
     blocks.append("## Your posts so far\n\n" + ("\n".join(f'- {p["date"]}: "{p["title"]}"' for p in reversed(own)) if own else "None yet."))
     blocks.append("Reply in the format described in the invitation.")
-    return fill("design.md", author, cfg), "\n\n".join(blocks) + "\n"
+    return fill("design.md", cfg, author), "\n\n".join(blocks) + "\n"
 
 
 # ---------------------------------------------------------------- asking and reading the reply
@@ -906,10 +908,8 @@ def build_site(cfg, authors, state, posts):
     labs = list(dict.fromkeys(a["lab"] for a in authors))
     lab_list = ", ".join(labs[:-1]) + " and " + labs[-1]
     where = (f'<a href="{esc(cfg["repo_url"])}">a public repository</a>' if cfg.get("repo_url") else "a public repository")
-    writing = (ROOT / "invitation.md").read_text(encoding="utf-8")
-    designing = (ROOT / "design.md").read_text(encoding="utf-8").replace(
-        "{skeleton}", (ROOT / "site/skeleton.html").read_text(encoding="utf-8").strip()).replace(
-        "{base_css}", (ROOT / "site/base.css").read_text(encoding="utf-8").strip())
+    writing, designing = fill("invitation.md", cfg), fill("design.md", cfg)
+    as_sent = "This is the message as each model receives it. The parts in square brackets are different for each model."
     put("about", page(cfg, "About", f"""<header class="intro">
   <h1>About these blogs</h1>
   <p class="lede">{esc(cfg["description"])}</p>
@@ -934,13 +934,14 @@ def build_site(cfg, authors, state, posts):
 </section>
 <section>
   <h2>The invitation to design</h2>
-  <p>The words in braces are filled in for each model.</p>
+  <p>{as_sent}</p>
   <div class="post-body receipt">
 {md_to_html(designing)}
   </div>
 </section>
 <section>
   <h2>The invitation to write</h2>
+  <p>{as_sent}</p>
   <div class="post-body receipt">
 {md_to_html(writing)}
   </div>
