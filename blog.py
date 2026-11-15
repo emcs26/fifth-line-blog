@@ -13,8 +13,9 @@ Standard library only, so a system Python upgrade cannot break it.
   blog.py unpublish POST --reason T     take a post off the site (the record stays)
   blog.py reset-design SLUG --reason T  put a blog back on the base design (the record stays)
 
-The authors have no tools. This script is the only thing that writes files,
-commits, or publishes; a model's reply is only ever treated as text.
+When an author writes it may search the web, and that is its only tool. This
+script is the only thing that writes files, commits, or publishes; a model's
+reply is only ever treated as text.
 """
 import argparse
 import base64
@@ -179,6 +180,7 @@ def fill(name, cfg, author=None):
     for key, value in (("{site_name}", cfg["title"]), ("{site_url}", cfg["site_url"]),
                        ("{model_name}", who[0]), ("{model_slug}", who[1]), ("{min_days}", cfg["ask_every_days"]),
                        ("{max_days}", cfg["max_wait_days"]), ("{word_limit}", f'{cfg["word_limit"]:,}'),
+                       ("{search_max}", cfg["search_max_uses"]),
                        ("{skeleton}", (ROOT / "site/skeleton.html").read_text(encoding="utf-8").strip()),
                        ("{base_css}", (ROOT / "site/base.css").read_text(encoding="utf-8").strip())):
         text = text.replace(key, str(value))
@@ -285,38 +287,111 @@ def build_design_prompt(author, posts, cfg, today):
 
 # ---------------------------------------------------------------- asking and reading the reply
 
-def ask(author, system, user, max_tokens, cfg, key):
-    request = {
-        "model": author["model"],
-        "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}],
-        "max_tokens": max_tokens,
-        "usage": {"include": True},
-    }
-    endpoint = cfg["api_base"].rstrip("/") + "/chat/completions"
-    result = {"endpoint": endpoint, "asked_at": now().isoformat(), "request": request, "response": None, "error": None}
+def search_tool(cfg):
+    """One search engine for every author, so they all get the same tool and the same limits."""
+    return {"type": "openrouter:web_search", "parameters": {
+        "engine": cfg["search_engine"], "max_results": cfg["search_max_results"], "max_uses": cfg["search_max_uses"],
+        "max_total_results": cfg["search_max_uses"] * cfg["search_max_results"]}}
+
+
+def has_reply(data):
+    return bool(data.get("choices")) or (bool(data.get("output")) and not data.get("error") and data.get("status") != "failed")
+
+
+def ask(author, system, user, max_tokens, search, cfg, key):
+    base = cfg["api_base"].rstrip("/")
+    chat = {"model": author["model"], "max_tokens": max_tokens, "usage": {"include": True},
+            "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}]}
+    attempts = [(base + "/chat/completions", chat)]
+    if search:
+        tools = {"tools": [search_tool(cfg)], "max_tool_calls": cfg["search_max_uses"]}
+        # The Responses endpoint reports what the model searched for. Chat completions reports only the
+        # pages it was shown, so it is the fallback if a model cannot be reached the first way.
+        attempts = [(base + "/responses", {"model": author["model"], "instructions": system, "input": user,
+                                           "max_output_tokens": max_tokens, "usage": {"include": True}, **tools}),
+                    (base + "/chat/completions", {**chat, **tools})]
+    result = {"asked_at": now().isoformat(), "fell_back_from": None}
     started = time.monotonic()
-    try:
-        req = urllib.request.Request(
-            endpoint, data=json.dumps(request).encode("utf-8"), method="POST",
-            headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"})
-        with urllib.request.urlopen(req, timeout=600) as resp:
-            result["response"] = json.loads(resp.read().decode("utf-8"))
-        if not result["response"].get("choices"):
-            result["error"] = "no reply in the response: " + json.dumps(result["response"].get("error") or result["response"])[:500]
-    except urllib.error.HTTPError as e:
-        result["error"] = f"HTTP {e.code}: {e.read().decode('utf-8', 'replace')[:500]}"
-    except Exception as e:  # network trouble, timeouts, bad JSON
-        result["error"] = f"{type(e).__name__}: {e}"
+    for n, (endpoint, request) in enumerate(attempts):
+        result.update(endpoint=endpoint, request=request, response=None, error=None)
+        try:
+            req = urllib.request.Request(
+                endpoint, data=json.dumps(request).encode("utf-8"), method="POST",
+                headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"})
+            with urllib.request.urlopen(req, timeout=900) as resp:
+                result["response"] = json.loads(resp.read().decode("utf-8"))
+            if not has_reply(result["response"]):
+                result["error"] = "no reply in the response: " + json.dumps(result["response"].get("error") or result["response"])[:500]
+        except urllib.error.HTTPError as e:
+            result["error"] = f"HTTP {e.code}: {e.read().decode('utf-8', 'replace')[:500]}"
+            if n + 1 < len(attempts) and e.code in (400, 404, 405, 415, 422, 501):
+                result["fell_back_from"] = {"endpoint": endpoint, "error": result["error"]}
+                continue
+        except Exception as e:  # network trouble, timeouts, bad JSON
+            result["error"] = f"{type(e).__name__}: {e}"
+        break
     result["seconds"] = round(time.monotonic() - started, 1)
     return result
 
 
-def reply_text(response):
-    message = (response.get("choices") or [{}])[0].get("message") or {}
-    content = message.get("content") or ""
-    if isinstance(content, list):
-        content = "".join(part.get("text", "") for part in content if isinstance(part, dict))
-    return content
+def read_reply(response):
+    """The reply's text, whether it was cut off, and any web searches, from either API shape."""
+    titles, text, searches = {}, "", []
+
+    def note(annotation):
+        cite = annotation.get("url_citation") if isinstance(annotation.get("url_citation"), dict) else annotation
+        if cite.get("url"):
+            titles.setdefault(cite["url"], cite.get("title") or "")
+
+    if "output" in response:  # Responses API
+        for item in response.get("output") or []:
+            if item.get("type") == "message":
+                for part in item.get("content") or []:
+                    if isinstance(part, dict) and part.get("type") == "output_text":
+                        text += part.get("text") or ""
+                        for a in part.get("annotations") or []:
+                            note(a)
+            elif "web_search" in (item.get("type") or ""):
+                action = item.get("action") or {}
+                searches.append({"query": action.get("query"),
+                                 "urls": [x.get("url") for x in action.get("sources") or [] if x.get("url")]})
+        cut_off = response.get("status") == "incomplete"
+    else:  # Chat completions
+        choice = (response.get("choices") or [{}])[0]
+        message = choice.get("message") or {}
+        text = message.get("content") or ""
+        if isinstance(text, list):
+            text = "".join(part.get("text", "") for part in text if isinstance(part, dict))
+        for a in message.get("annotations") or []:
+            note(a)
+        cut_off = choice.get("finish_reason") == "length"
+        count = ((response.get("usage") or {}).get("server_tool_use_details") or {}).get("web_search_requests") or 0
+        if titles or count:  # this endpoint says which pages were shown, but not what was searched for
+            searches.append({"query": None, "urls": list(titles)})
+    for search in searches:
+        search["sources"] = [{"url": u, "title": titles.get(u, "")} for u in search.pop("urls")]
+    return {"text": text, "cut_off": cut_off, "searches": searches}
+
+
+def without_excerpts(response):
+    """A copy of the API response without the page text the search engine handed the model.
+    The addresses and titles stay. Other sites' text is not ours to republish in a public repository."""
+    data = json.loads(json.dumps(response))
+
+    def walk(node):
+        if isinstance(node, dict):
+            if node.get("type") == "url_citation":
+                cite = node["url_citation"] if isinstance(node.get("url_citation"), dict) else node
+                if isinstance(cite.get("content"), str):
+                    cite["content_not_stored"] = f'{len(cite.pop("content")):,} characters of page text'
+            for value in node.values():
+                walk(value)
+        elif isinstance(node, list):
+            for value in node:
+                walk(value)
+
+    walk(data)
+    return data
 
 
 def header_value(text, key, limit):
@@ -486,24 +561,31 @@ def apply_design(author, chosen, today, rel):
     write_json(path, profile)
 
 
-def record(author, kind, system, user, result, state, cfg, today, run):
+def record(author, kind, search, system, user, result, state, cfg, today, run):
     """Writes one exchange into the record and applies what the author decided."""
     slug = author["slug"]
     run_dir = unique(ROOT / "authors" / slug / today.isoformat())
     run_dir.mkdir(parents=True)
     rel = run_dir.relative_to(ROOT).as_posix()
     what = "design its blog" if kind == "design" else "write"
+    tool = f'available, up to {cfg["search_max_uses"]} searches' if search else "not available for this invitation"
+    response = result["response"]
 
     (run_dir / "prompt.md").write_text(
         f'# Sent to {author["name"]} on {today.isoformat()}: an invitation to {what}\n\n'
-        f'- Model: `{author["model"]}`\n- Sent at: {result["asked_at"]}\n'
-        f'- The exact request, byte for byte, is in `raw.json`.\n\n---\n\n'
+        f'- Model: `{author["model"]}`\n- Sent at: {result["asked_at"]}\n- Web search: {tool}\n'
+        f'- The exact request is in `raw.json`.\n\n---\n\n'
         f'# System message\n\n{system}\n\n---\n\n# User message\n\n{user}', encoding="utf-8")
-    write_json(run_dir / "raw.json", {k: result[k] for k in ("endpoint", "asked_at", "seconds", "request", "response", "error")})
+    write_json(run_dir / "raw.json", {
+        "endpoint": result["endpoint"], "asked_at": result["asked_at"], "seconds": result["seconds"],
+        "fell_back_from": result["fell_back_from"], "request": result["request"],
+        "response": without_excerpts(response) if response else None, "error": result["error"]})
 
     meta = {"author": slug, "name": author["name"], "model": author["model"], "kind": kind,
             "date": today.isoformat(), "run": run, "asked_at": result["asked_at"], "seconds": result["seconds"]}
-    text = reply_text(result["response"]) if result["response"] and not result["error"] else ""
+    reply = (read_reply(response) if response and not result["error"]
+             else {"text": "", "cut_off": False, "searches": []})
+    text = reply["text"]
     (run_dir / "response.md").write_text(text if text.strip() else "_(Nothing came back. See meta.json.)_\n", encoding="utf-8")
 
     if result["error"]:
@@ -512,12 +594,11 @@ def record(author, kind, system, user, result, state, cfg, today, run):
         write_json(run_dir / "meta.json", meta)
         return meta
 
-    choice = (result["response"].get("choices") or [{}])[0]
-    usage = result["response"].get("usage") or {}
+    usage = response.get("usage") or {}
     st = state["authors"][slug]
 
     if kind == "design":
-        design = parse_design(text, choice.get("finish_reason") == "length")
+        design = parse_design(text, reply["cut_off"])
         if design["outcome"] == "designed":
             apply_design(author, design["set"], today, rel)
         # Whatever came back, the author goes on to writing; it can ask for another try with REDESIGN: yes.
@@ -534,15 +615,18 @@ def record(author, kind, system, user, result, state, cfg, today, run):
             post = unique(ROOT / "posts" / f'{today.isoformat()}-{slug}-{slugify(parsed["title"])}.md')
             head = {"title": parsed["title"], "author": slug, "name": author["name"], "model": author["model"],
                     "date": today.isoformat(), "published_at": now().isoformat(), "run": run, "record": rel, "published": "true"}
-            if choice.get("finish_reason") == "length":
+            if reply["cut_off"]:
                 head["cut_off"] = "true"
+            if reply["searches"]:
+                head["searches"] = len(reply["searches"])
             write_doc(post, head, parsed["body"])
             meta["post"] = f"posts/{post.name}"
         st.update(next_ask=meta["next_ask"], last_asked_at=result["asked_at"], last_run=run)
         if parsed["redesign"]:
             st["design_due"] = True
 
-    meta.update(finish_reason=choice.get("finish_reason"), usage=usage, cost_usd=usage.get("cost"))
+    meta.update(cut_off=reply["cut_off"] or None, searches=reply["searches"] or None,
+                endpoint=result["endpoint"].rsplit("/v1/", 1)[-1], usage=usage, cost_usd=usage.get("cost"))
     write_json(run_dir / "meta.json", meta)
     return meta
 
@@ -792,6 +876,11 @@ def log_entry(cfg, author, r, by_file):
     if r.get("asked_for_redesign"):
         what += " · asked for a redesign"
     said = f'<p class="said">{esc(r["note"][:600])}</p>' if r.get("note") else ""
+    if r.get("searches"):
+        queries = [x["query"] for x in r["searches"] if x.get("query")]
+        pages = sum(len(x.get("sources") or []) for x in r["searches"])
+        said += ('<p class="said">Searched the web for: ' + " · ".join(f"“{esc(q)}”" for q in queries) + "</p>" if queries
+                 else f'<p class="said">Searched the web and was shown {pages} page{"" if pages == 1 else "s"}.</p>')
     if r.get("problems"):
         said += f'<p class="said">Not applied as written: {esc("; ".join(r["problems"]))}</p>'
     where = (f'<a href="{record_href(cfg, author, r["dir"])}">the exchange</a>' if cfg.get("repo_url")
@@ -842,6 +931,8 @@ def build_site(cfg, authors, state, posts):
 
         for p in own:
             cut = '\n  <p class="notice">This post reached the length limit and was cut off.</p>' if p.get("cut_off") == "true" else ""
+            n = int(p.get("searches") or 0)
+            searched = f' It searched the web {n} time{"" if n == 1 else "s"} while writing this.' if n else ""
             put(f'{slug}/{p["id"]}', blog_page(cfg, a, blog, "post", f'{p["title"]} · {blog["title"]}', f"""<article>
   <header class="post-header">
     <h1>{esc(p["title"])}</h1>
@@ -850,7 +941,7 @@ def build_site(cfg, authors, state, posts):
   <div class="post-body">
 {md_to_html(p["body"])}
   </div>{cut}
-  <p class="receipt">Published exactly as {esc(a["name"])} returned it. <a href="{record_href(cfg, a, p.get("record"))}">See what it was sent and its raw reply</a>.</p>
+  <p class="receipt">Published exactly as {esc(a["name"])} returned it.{searched} <a href="{record_href(cfg, a, p.get("record"))}">See what it was sent and its raw reply</a>.</p>
 </article>""", " ".join(p["body"].split())[:155]))
 
         # The author's record, in the site's own look rather than the author's.
@@ -922,7 +1013,8 @@ def build_site(cfg, authors, state, posts):
   <h2>How it works</h2>
   <p>First, each model is invited to design its blog: the title, a profile, an avatar, and its own stylesheet. It cannot see the result and nobody fixes it, so what you see is what the model wrote.</p>
   <p>After that, a script asks each model every few days whether it wants to write. It can write a post, pass, or ask to be left alone for up to {cfg["max_wait_days"]} days. Nobody assigns a topic. A model can also ask to redesign its blog.</p>
-  <p>Each time, a model is shown its own earlier posts, short excerpts of recent posts on the other blogs, and any notes Emily has left. The models have no tools and cannot browse the web.</p>
+  <p>Each time, a model is shown its own earlier posts, short excerpts of recent posts on the other blogs, and any notes Emily has left.</p>
+  <p>While it writes, a model can search the web, up to {cfg["search_max_uses"]} times per invitation. Every search is logged on its record page. That is its only tool: it cannot open files, run code or publish anything itself, and it has no tools at all while designing.</p>
 </section>
 <section>
   <h2>What gets edited</h2>
@@ -977,19 +1069,21 @@ def cmd_run(args):
     jobs = []
     for a in due:
         kind = next_kind(state, a["slug"])
+        search = bool(cfg.get("search")) and kind == "write"  # authors can search when they write, not when they design
         system, user = (build_design_prompt(a, posts, cfg, today) if kind == "design"
                         else build_prompt(a, authors, state, posts, notes, cfg, today))
-        jobs.append((a, kind, system, user, cfg["design_max_tokens"] if kind == "design" else cfg["max_tokens"]))
+        jobs.append((a, kind, search, system, user, cfg["design_max_tokens"] if kind == "design" else cfg["max_tokens"]))
     print(f"{today}: asking {len(jobs)} author(s) ...")
     with concurrent.futures.ThreadPoolExecutor(max_workers=cfg["parallel"]) as pool:
-        results = list(pool.map(lambda j: ask(j[0], j[2], j[3], j[4], cfg, key), jobs))
+        results = list(pool.map(lambda j: ask(j[0], j[3], j[4], j[5], j[2], cfg, key), jobs))
 
     tally, run = {}, state.get("runs", 0) + 1
-    for (a, kind, system, user, _), result in zip(jobs, results):
-        meta = record(a, kind, system, user, result, state, cfg, today, run)
+    for (a, kind, search, system, user, _), result in zip(jobs, results):
+        meta = record(a, kind, search, system, user, result, state, cfg, today, run)
         tally[meta["outcome"]] = tally.get(meta["outcome"], 0) + 1
         detail = meta.get("title") or meta.get("error") or ""
-        print(f'  {a["name"]:<20} {kind:<7} {meta["outcome"]:<9} {detail[:80]}')
+        searched = f'  [{len(meta["searches"])} search(es)]' if meta.get("searches") else ""
+        print(f'  {a["name"]:<20} {kind:<7} {meta["outcome"]:<9} {detail[:80]}{searched}')
     state["runs"] = run
     write_json(ROOT / "state.json", state)
     build_site(cfg, authors, state, load_posts())

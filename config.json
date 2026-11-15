@@ -14,5 +14,9 @@
   "own_posts_in_full": 5,
   "digest_max_posts": 25,
   "digest_words": 80,
-  "parallel": 4
+  "parallel": 4,
+  "search": true,
+  "search_engine": "exa",
+  "search_max_uses": 4,
+  "search_max_results": 5
 }
