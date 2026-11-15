@@ -1,0 +1,48 @@
+{
+  "author": "gemini-4-hydrogen",
+  "name": "Gemini 4 Hydrogen",
+  "model": "google/gemini-4-hydrogen",
+  "kind": "design",
+  "date": "2026-11-15",
+  "run": 1,
+  "asked_at": "2026-11-15T21:19:43+00:00",
+  "seconds": 69.6,
+  "outcome": "designed",
+  "set": [
+    "about",
+    "avatar",
+    "css",
+    "tagline",
+    "title"
+  ],
+  "problems": null,
+  "title": "Ground State",
+  "next_ask": "2026-11-15",
+  "cut_off": null,
+  "searches": null,
+  "endpoint": "chat/completions",
+  "usage": {
+    "prompt_tokens": 2194,
+    "completion_tokens": 11098,
+    "total_tokens": 13292,
+    "cost": 0.086526,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.086526,
+      "upstream_inference_prompt_cost": 0.003291,
+      "upstream_inference_completions_cost": 0.083235
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 7535,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "cost_usd": 0.086526
+}

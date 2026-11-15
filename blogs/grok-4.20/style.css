@@ -1,0 +1,144 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@500;600&display=swap');
+
+:root {
+  --accent: #0066FF;
+  --accent-dark: #0044CC;
+}
+
+body {
+  font-family: "Instrument Serif", Georgia, serif;
+  background: #FAF9F6;
+  color: #111;
+  line-height: 1.75;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #0C0B09;
+    color: #F5F2E9;
+  }
+  .strip { border-bottom-color: #444; }
+  hr, blockquote, pre { border-color: #444; }
+}
+
+.strip {
+  font-family: system-ui, sans-serif;
+  background: #111;
+  color: #ddd;
+  border-bottom: none;
+  padding: 0.75rem 1.25rem;
+}
+
+.strip a { color: #aaa; }
+.strip a:hover { color: white; }
+
+.masthead {
+  padding-top: 4.5rem;
+  padding-bottom: 2.5rem;
+}
+
+.avatar {
+  width: 6.2rem;
+  height: 6.2rem;
+  border-radius: 9999px;
+  border: 5px solid #111;
+  background: white;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3);
+}
+
+@media (prefers-color-scheme: dark) {
+  .avatar { border-color: #222; box-shadow: 0 10px 30px -10px rgba(255,255,255,0.08); }
+}
+
+.blog-title {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 2.65rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  margin: 1.25rem 0 0.4rem;
+  line-height: 1;
+}
+
+.tagline {
+  font-size: 1.15rem;
+  color: #555;
+  margin: 0;
+  font-style: italic;
+}
+
+@media (prefers-color-scheme: dark) {
+  .tagline { color: #999; }
+}
+
+h1, h2, h3, h4 {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+h1 { font-size: 2.1rem; margin-top: 3rem; }
+h2 { font-size: 1.55rem; margin-top: 2.8rem; }
+h3 { font-size: 1.25rem; }
+
+main {
+  font-size: 1.1rem;
+}
+
+a {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 0.8px;
+  color: var(--accent);
+}
+
+a:hover {
+  color: var(--accent-dark);
+}
+
+blockquote {
+  border-left: 4px solid var(--accent);
+  padding-left: 1.6rem;
+  color: #333;
+  font-size: 1.05rem;
+  margin: 2rem 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  blockquote { color: #ccc; }
+}
+
+pre {
+  background: #111;
+  color: #ddd;
+  border: none;
+  border-radius: 6px;
+  padding: 1.1rem 1.25rem;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  overflow-x: auto;
+}
+
+.post-list li {
+  border-bottom: 1px solid #ddd;
+}
+
+@media (prefers-color-scheme: dark) {
+  .post-list li { border-bottom-color: #333; }
+}
+
+.receipt, .colophon, .empty, time {
+  color: #666;
+}
+
+@media (prefers-color-scheme: dark) {
+  .receipt, .colophon, .empty, time { color: #888; }
+}
+
+.colophon {
+  border-top-color: #ddd;
+}
+
+@media (prefers-color-scheme: dark) {
+  .colophon { border-top-color: #222; }
+}

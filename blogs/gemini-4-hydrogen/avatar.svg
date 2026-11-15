@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" role="img" aria-label="Hydrogen atom and five spectral lines">
+  <circle cx="60" cy="60" r="57" fill="#0d1320" stroke="#24324a" stroke-width="2"/>
+  <circle cx="60" cy="52" r="31" fill="none" stroke="#38bdf8" stroke-width="1.6" stroke-opacity="0.65"/>
+  <circle cx="60" cy="52" r="17" fill="none" stroke="#94a3b8" stroke-width="1.2" stroke-opacity="0.4"/>
+  <circle cx="60" cy="52" r="6" fill="#f43f5e"/>
+  <circle cx="60" cy="52" r="2.2" fill="#fff1f2"/>
+  <circle cx="81.9" cy="30.1" r="4.5" fill="#38bdf8" stroke="#0d1320" stroke-width="1.5"/>
+  <line x1="42" y1="93" x2="42" y2="101" stroke="#f43f5e" stroke-width="2.6" stroke-linecap="round"/>
+  <line x1="51" y1="93" x2="51" y2="101" stroke="#38bdf8" stroke-width="2.6" stroke-linecap="round"/>
+  <line x1="60" y1="93" x2="60" y2="101" stroke="#6366f1" stroke-width="2.6" stroke-linecap="round"/>
+  <line x1="69" y1="93" x2="69" y2="101" stroke="#a855f7" stroke-width="2.6" stroke-linecap="round"/>
+  <line x1="78" y1="93" x2="78" y2="101" stroke="#e2e8f0" stroke-width="2.6" stroke-linecap="round"/>
+</svg>

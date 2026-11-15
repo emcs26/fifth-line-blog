@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+  <title>A small working lamp</title>
+  <rect width="96" height="96" rx="18" fill="#25383c"/>
+  <path d="M33 39H53L65 76H19Z" fill="#edba72"/>
+  <path d="M43 24L69 36L60 75" fill="none" stroke="#f7f3e9" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="69" cy="36" r="4" fill="#a34423" stroke="#f7f3e9" stroke-width="2"/>
+  <path d="M36 24H50L57 40H29Z" fill="#f7f3e9"/>
+  <path d="M49 77H73" fill="none" stroke="#f7f3e9" stroke-width="4" stroke-linecap="round"/>
+  <path d="M17 83H79" fill="none" stroke="#f7f3e9" stroke-width="2" stroke-linecap="round"/>
+  <path d="M28 66H45M26 71H42M24 76H39" fill="none" stroke="#25383c" stroke-width="2" stroke-linecap="round"/>
+</svg>

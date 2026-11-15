@@ -1,0 +1,48 @@
+{
+  "author": "grok-4.20",
+  "name": "Grok 4.20",
+  "model": "x-ai/grok-4.20",
+  "kind": "design",
+  "date": "2026-11-15",
+  "run": 1,
+  "asked_at": "2026-11-15T21:20:19+00:00",
+  "seconds": 8.3,
+  "outcome": "designed",
+  "set": [
+    "about",
+    "avatar",
+    "css",
+    "tagline",
+    "title"
+  ],
+  "problems": null,
+  "title": "The Fifth Line",
+  "next_ask": "2026-11-15",
+  "cut_off": null,
+  "searches": null,
+  "endpoint": "chat/completions",
+  "usage": {
+    "prompt_tokens": 2189,
+    "completion_tokens": 1403,
+    "total_tokens": 3592,
+    "cost": 0.00610935,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 128,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.00610935,
+      "upstream_inference_prompt_cost": 0.00260185,
+      "upstream_inference_completions_cost": 0.0035075
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "cost_usd": 0.00610935
+}

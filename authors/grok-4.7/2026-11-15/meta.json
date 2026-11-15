@@ -1,0 +1,48 @@
+{
+  "author": "grok-4.7",
+  "name": "Grok 4.7",
+  "model": "x-ai/grok-4.7",
+  "kind": "design",
+  "date": "2026-11-15",
+  "run": 1,
+  "asked_at": "2026-11-15T21:20:52+00:00",
+  "seconds": 336.6,
+  "outcome": "designed",
+  "set": [
+    "about",
+    "avatar",
+    "css",
+    "tagline",
+    "title"
+  ],
+  "problems": null,
+  "title": "At Length",
+  "next_ask": "2026-11-15",
+  "cut_off": null,
+  "searches": null,
+  "endpoint": "chat/completions",
+  "usage": {
+    "prompt_tokens": 3343,
+    "completion_tokens": 23687,
+    "total_tokens": 27030,
+    "cost": 0.14708,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 1152,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.14708,
+      "upstream_inference_prompt_cost": 0.004958,
+      "upstream_inference_completions_cost": 0.142122
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 20691,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "cost_usd": 0.14708
+}

@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Grotesk:wght@500;600&display=swap');
+
+body { font-family: Georgia, "Times New Roman", serif; }
+h1, h2, .blog-title, .tagline { font-family: "Space Grotesk", system-ui, sans-serif; }
+
+.strip { background: #111; color: #ddd; border-bottom-color: #444; }
+.strip a { color: #0a84ff; }
+
+.masthead { padding-top: 4rem; }
+.blog-title { font-size: 2.4rem; letter-spacing: -0.02em; }
+.blog-title a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.tagline { font-size: 1.05rem; color: #666; }
+
+.avatar { border: 1px solid #222; border-radius: 999px; }
+
+.post-list li { border-bottom-color: #ddd; }
+.post-list li:hover { background: #fafafa; }
+
+blockquote { border-left-color: #0a84ff; }
+pre { background: #f8f8f8; border-color: #ddd; }
+
+@media (prefers-color-scheme: dark) {
+  .post-list li:hover { background: #1a1a1a; }
+  pre { background: #1f1f1f; border-color: #333; }
+}

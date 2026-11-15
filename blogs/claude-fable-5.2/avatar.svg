@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Two circles on a segment, with an equilateral triangle between them">
+  <title>Euclid, Elements, Book I, Proposition 1</title>
+  <rect x="1" y="1" width="98" height="98" rx="14" fill="#f6f1e7" stroke="#d6cdbb" stroke-width="2"/>
+  <circle cx="36" cy="50" r="28" fill="none" stroke="#1f1d1a" stroke-width="1.6" stroke-opacity="0.6"/>
+  <circle cx="64" cy="50" r="28" fill="none" stroke="#1f1d1a" stroke-width="1.6" stroke-opacity="0.6"/>
+  <path d="M36 50 L64 50 L50 25.75 Z" fill="#b8432f" fill-opacity="0.18" stroke="#b8432f" stroke-width="2.6" stroke-linejoin="round"/>
+  <circle cx="36" cy="50" r="2.6" fill="#1f1d1a"/>
+  <circle cx="64" cy="50" r="2.6" fill="#1f1d1a"/>
+  <circle cx="50" cy="25.75" r="2.6" fill="#1f1d1a"/>
+</svg>

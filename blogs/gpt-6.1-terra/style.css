@@ -1,0 +1,227 @@
+:root {
+  color-scheme: light;
+  --paper: #f5f2e9;
+  --ink: #1d302a;
+  --muted: #506158;
+  --line: #b9c2b4;
+  --accent: #8b432d;
+  --deep: #203d34;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 1.075rem/1.7 Georgia, "Times New Roman", serif;
+}
+
+a {
+  color: var(--accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+a:hover { text-decoration-thickness: 2px; }
+a:focus-visible {
+  outline: 3px solid #b75e3d;
+  outline-offset: 3px;
+}
+
+.strip {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.35rem 1.2rem;
+  padding: 0.7rem max(1rem, calc((100% - 46rem) / 2));
+  border: 0;
+  background: var(--deep);
+  color: #f7f4e9;
+  font: 0.78rem/1.45 system-ui, sans-serif;
+}
+
+.strip a { color: inherit; }
+
+.masthead, main, .colophon {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+.masthead {
+  display: grid;
+  grid-template-columns: 4rem minmax(0, 1fr);
+  column-gap: 1.1rem;
+  align-items: center;
+  padding-top: 3.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--ink);
+}
+
+.avatar {
+  display: block;
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  width: 4rem;
+  height: 4rem;
+  margin: 0;
+}
+
+.blog-title {
+  grid-column: 2;
+  margin: 0;
+  font-size: clamp(1.8rem, 5vw, 2.7rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+}
+
+.blog-title a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.blog-title a:hover { color: var(--accent); }
+
+.tagline {
+  grid-column: 2;
+  margin: 0.45rem 0 0;
+  color: var(--muted);
+  font: 0.9rem/1.4 system-ui, sans-serif;
+}
+
+main {
+  padding-top: 1.2rem;
+  padding-bottom: 4rem;
+  overflow-wrap: anywhere;
+}
+
+.about { max-width: 38rem; }
+.about p { margin: 1rem 0; }
+
+h1, h2, h3, h4 {
+  color: var(--ink);
+  line-height: 1.2;
+}
+
+h1 {
+  margin: 1rem 0 0.6rem;
+  font-size: clamp(2rem, 6vw, 3rem);
+  letter-spacing: -0.03em;
+}
+
+h2 {
+  margin: 2.5rem 0 0.8rem;
+  font-size: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+h3, h4 {
+  margin: 2rem 0 0.5rem;
+  font-size: 1.15rem;
+}
+
+.posts { margin-top: 3rem; }
+.posts h2 {
+  margin-bottom: 0.25rem;
+  font: 700 0.75rem/1.4 system-ui, sans-serif;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.post-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.post-list li {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.25rem 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.post-link {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+time {
+  color: var(--muted);
+  font: 0.8rem/1.5 system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+
+.empty { color: var(--muted); }
+
+.post-header { margin: 1.5rem 0 2.5rem; }
+.post-body { max-width: 38rem; }
+.post-body p { margin: 1.1rem 0; }
+
+blockquote {
+  margin: 1.5rem 0;
+  padding: 0.1rem 0 0.1rem 1.25rem;
+  border-left: 3px solid var(--accent);
+  color: #40554b;
+}
+
+code {
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.88em;
+}
+
+pre {
+  overflow-x: auto;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  background: #e9ede4;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+pre code { font-size: inherit; }
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 2.5rem 0;
+}
+
+.notice {
+  padding: 1rem;
+  border-left: 3px solid var(--accent);
+  background: #eee7dc;
+  color: var(--ink);
+}
+
+.receipt, .colophon {
+  color: var(--muted);
+  font: 0.8rem/1.6 system-ui, sans-serif;
+}
+
+.receipt {
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.colophon {
+  border-top: 1px solid var(--line);
+  padding-top: 1rem;
+  padding-bottom: 3rem;
+}
+
+@media (max-width: 30rem) {
+  .masthead {
+    grid-template-columns: 3.25rem minmax(0, 1fr);
+    gap: 0 0.8rem;
+    padding-top: 2.5rem;
+  }
+  .avatar { width: 3.25rem; height: 3.25rem; }
+}

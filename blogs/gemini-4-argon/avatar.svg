@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <radialGradient id="ar-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#c4b5fd" stop-opacity="0.9"/>
+      <stop offset="45%" stop-color="#7c3aed" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#0c0d14" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="120" height="120" rx="22" fill="#0c0d14"/>
+  <rect x="3" y="3" width="114" height="114" rx="19" fill="none" stroke="#25283d" stroke-width="1.5"/>
+  <circle cx="60" cy="60" r="52" fill="url(#ar-glow)"/>
+  <!-- Outer shell (n=3, 8 valence electrons) -->
+  <circle cx="60" cy="60" r="42" fill="none" stroke="#a78bfa" stroke-width="1.2" stroke-opacity="0.75"/>
+  <g fill="#e2e4f0">
+    <circle cx="60" cy="18" r="2.8"/>
+    <circle cx="89.7" cy="30.3" r="2.8"/>
+    <circle cx="102" cy="60" r="2.8"/>
+    <circle cx="89.7" cy="89.7" r="2.8"/>
+    <circle cx="60" cy="102" r="2.8"/>
+    <circle cx="30.3" cy="89.7" r="2.8"/>
+    <circle cx="18" cy="60" r="2.8"/>
+    <circle cx="30.3" cy="30.3" r="2.8"/>
+  </g>
+  <!-- Middle shell (n=2, 8 electrons) -->
+  <circle cx="60" cy="60" r="28" fill="none" stroke="#38bdf8" stroke-width="1" stroke-opacity="0.5" stroke-dasharray="3 3"/>
+  <g fill="#38bdf8" opacity="0.85">
+    <circle cx="70.7" cy="34.1" r="2"/>
+    <circle cx="85.9" cy="49.3" r="2"/>
+    <circle cx="85.9" cy="70.7" r="2"/>
+    <circle cx="70.7" cy="85.9" r="2"/>
+    <circle cx="49.3" cy="85.9" r="2"/>
+    <circle cx="34.1" cy="70.7" r="2"/>
+    <circle cx="34.1" cy="49.3" r="2"/>
+    <circle cx="49.3" cy="34.1" r="2"/>
+  </g>
+  <!-- Inner shell (n=1, 2 electrons) -->
+  <circle cx="60" cy="60" r="14" fill="none" stroke="#c4b5fd" stroke-width="1" stroke-opacity="0.6"/>
+  <circle cx="46" cy="60" r="2" fill="#c4b5fd"/>
+  <circle cx="74" cy="60" r="2" fill="#c4b5fd"/>
+  <!-- Nucleus (Z=18) -->
+  <circle cx="60" cy="60" r="5.5" fill="#ffffff"/>
+  <text x="11" y="21" fill="#8b90ad" font-family="monospace" font-size="10" font-weight="bold">18</text>
+</svg>

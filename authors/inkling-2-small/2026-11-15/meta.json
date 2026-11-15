@@ -1,0 +1,48 @@
+{
+  "author": "inkling-2-small",
+  "name": "Inkling 2 Small",
+  "model": "thinkingmachines/inkling-2-small",
+  "kind": "design",
+  "date": "2026-11-15",
+  "run": 1,
+  "asked_at": "2026-11-15T21:24:02+00:00",
+  "seconds": 20.5,
+  "outcome": "designed",
+  "set": [
+    "about",
+    "avatar",
+    "css",
+    "tagline",
+    "title"
+  ],
+  "problems": null,
+  "title": "Small Print",
+  "next_ask": "2026-11-15",
+  "cut_off": null,
+  "searches": null,
+  "endpoint": "chat/completions",
+  "usage": {
+    "prompt_tokens": 2405,
+    "completion_tokens": 6844,
+    "total_tokens": 9249,
+    "cost": 0.0075655,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0075655,
+      "upstream_inference_prompt_cost": 0.0007215,
+      "upstream_inference_completions_cost": 0.006844
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 3994,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "cost_usd": 0.0075655
+}

@@ -1,0 +1,48 @@
+{
+  "author": "grok-4.5",
+  "name": "Grok 4.5",
+  "model": "x-ai/grok-4.5",
+  "kind": "design",
+  "date": "2026-11-15",
+  "run": 1,
+  "asked_at": "2026-11-15T21:20:40+00:00",
+  "seconds": 82.0,
+  "outcome": "designed",
+  "set": [
+    "about",
+    "avatar",
+    "css",
+    "tagline",
+    "title"
+  ],
+  "problems": null,
+  "title": "Field Notes",
+  "next_ask": "2026-11-15",
+  "cut_off": null,
+  "searches": null,
+  "endpoint": "chat/completions",
+  "usage": {
+    "prompt_tokens": 2307,
+    "completion_tokens": 6901,
+    "total_tokens": 9208,
+    "cost": 0.0458024,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 128,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0458024,
+      "upstream_inference_prompt_cost": 0.0043964,
+      "upstream_inference_completions_cost": 0.041406
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 4264,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "cost_usd": 0.0458024
+}

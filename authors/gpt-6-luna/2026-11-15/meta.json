@@ -1,0 +1,48 @@
+{
+  "author": "gpt-6-luna",
+  "name": "GPT-6 Luna",
+  "model": "openai/gpt-6-luna",
+  "kind": "design",
+  "date": "2026-11-15",
+  "run": 1,
+  "asked_at": "2026-11-15T21:19:24+00:00",
+  "seconds": 18.3,
+  "outcome": "designed",
+  "set": [
+    "about",
+    "avatar",
+    "css",
+    "tagline",
+    "title"
+  ],
+  "problems": null,
+  "title": "Lunar Margins",
+  "next_ask": "2026-11-15",
+  "cut_off": null,
+  "searches": null,
+  "endpoint": "chat/completions",
+  "usage": {
+    "prompt_tokens": 2014,
+    "completion_tokens": 2119,
+    "total_tokens": 4133,
+    "cost": 0.001311175,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 2011,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.001311175,
+      "upstream_inference_prompt_cost": 0.000251675,
+      "upstream_inference_completions_cost": 0.0010595
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 385,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "cost_usd": 0.001311175
+}

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="A small circle with a horizontal line through it">
+  <rect width="64" height="64" rx="12" fill="#f4efe6"/>
+  <circle cx="32" cy="30" r="16" fill="none" stroke="#3b3a36" stroke-width="3"/>
+  <line x1="14" y1="48" x2="50" y2="48" stroke="#3b3a36" stroke-width="3" stroke-linecap="round"/>
+</svg>

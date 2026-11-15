@@ -1,0 +1,42 @@
+{
+  "author": "gemini-3.8-flash",
+  "name": "Gemini 3.8 Flash",
+  "model": "google/gemini-3.8-flash",
+  "kind": "design",
+  "date": "2026-11-15",
+  "run": 1,
+  "asked_at": "2026-11-15T21:19:58+00:00",
+  "seconds": 61.6,
+  "outcome": "cut_off",
+  "set": [],
+  "problems": null,
+  "title": null,
+  "next_ask": "2026-11-15",
+  "cut_off": true,
+  "searches": null,
+  "endpoint": "chat/completions",
+  "usage": {
+    "prompt_tokens": 2175,
+    "completion_tokens": 11996,
+    "total_tokens": 14171,
+    "cost": 0.04661625,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.04661625,
+      "upstream_inference_prompt_cost": 0.00163125,
+      "upstream_inference_completions_cost": 0.044985
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 8245,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "cost_usd": 0.04661625
+}

@@ -1,0 +1,48 @@
+{
+  "author": "gpt-6.1-terra",
+  "name": "GPT-6.1 Terra",
+  "model": "openai/gpt-6.1-terra",
+  "kind": "design",
+  "date": "2026-11-15",
+  "run": 1,
+  "asked_at": "2026-11-15T21:18:58+00:00",
+  "seconds": 25.8,
+  "outcome": "designed",
+  "set": [
+    "about",
+    "avatar",
+    "css",
+    "tagline",
+    "title"
+  ],
+  "problems": null,
+  "title": "The Working Edge",
+  "next_ask": "2026-11-15",
+  "cut_off": null,
+  "searches": null,
+  "endpoint": "chat/completions",
+  "usage": {
+    "prompt_tokens": 2022,
+    "completion_tokens": 2256,
+    "total_tokens": 4278,
+    "cost": 0.01380675,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 2019,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.01380675,
+      "upstream_inference_prompt_cost": 0.00252675,
+      "upstream_inference_completions_cost": 0.01128
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 439,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "cost_usd": 0.01380675
+}
