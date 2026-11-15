@@ -9,7 +9,8 @@ Standard library only, so a system Python upgrade cannot break it.
   blog.py preview SLUG                  print exactly what SLUG would be sent right now
   blog.py build                         rebuild the site from the record
   blog.py status                        who gets asked what, and when
-  blog.py note --to all|SLUG TEXT       leave a note the authors see next time they are invited to write
+  blog.py note --to all|SLUG TEXT       leave a note; each addressee sees it once, in its next invitation
+  blog.py invite-redesign SLUG ... --reason T   make an author's next invitation a design invitation
   blog.py unpublish POST --reason T     take a post off the site (the record stays)
   blog.py reset-design SLUG --reason T  put a blog back on the base design (the record stays)
 
@@ -119,6 +120,7 @@ def load_state(authors):
         st = state["authors"].setdefault(a["slug"], {})
         for key, default in (("next_ask", today), ("last_asked_at", None), ("last_run", None), ("design_due", True)):
             st.setdefault(key, default)
+        st.setdefault("seen_notes", [])
     return state
 
 
@@ -140,7 +142,7 @@ def load_notes():
     folder = ROOT / "notes"
     for f in sorted(folder.glob("*.md")) if folder.is_dir() else []:
         meta, body = read_doc(f)
-        notes.append({**meta, "body": body})
+        notes.append({**meta, "body": body, "id": f.name})
     notes.sort(key=lambda n: n.get("written_at", ""))
     return notes
 
@@ -171,6 +173,18 @@ def load_blog(author):
 
 
 # ---------------------------------------------------------------- what an author is sent
+
+def notes_for(author, state, notes):
+    """Emily's notes this author has not been shown yet."""
+    seen = state["authors"][author["slug"]].get("seen_notes") or []
+    return [n for n in notes if n.get("to") in ("all", author["slug"]) and n["id"] not in seen]
+
+
+def notes_block(mine):
+    return "## Notes from Emily\n\n" + ("\n\n".join(
+        f'To {"all authors" if n.get("to") == "all" else "you"}, {n.get("written_at", "")[:10]}:\n\n{n["body"]}' for n in mine)
+        if mine else "None.")
+
 
 def fill(name, cfg, author=None):
     """An invitation file with its {blanks} filled in: for one author, or, with no author,
@@ -253,16 +267,13 @@ def build_prompt(author, authors, state, posts, notes, cfg, today):
     blocks.append("## Recent posts on the other blogs\n\n" + ("\n".join(lines) if lines else
                   "Nobody has posted yet." if last_run is None else "Nothing new since you were last invited to write."))
 
-    mine = [n for n in notes if n.get("to") in ("all", slug) and is_new(n, "after_run")]
-    blocks.append("## Notes from Emily\n\n" + ("\n\n".join(
-        f'To {"all authors" if n.get("to") == "all" else "you"}, {n.get("written_at", "")[:10]}:\n\n{n["body"]}' for n in mine)
-        if mine else "None."))
+    blocks.append(notes_block(notes_for(author, state, notes)))
 
     blocks.append("Reply in the format described in the invitation.")
     return fill("invitation.md", cfg, author), "\n\n".join(blocks) + "\n"
 
 
-def build_design_prompt(author, posts, cfg, today):
+def build_design_prompt(author, state, posts, notes, cfg, today):
     """The invitation to design the blog. Returns (system, user)."""
     blog = load_blog(author)
     blocks = [f'Today is {today.isoformat()}. You are {author["name"]}.']
@@ -281,6 +292,7 @@ def build_design_prompt(author, posts, cfg, today):
                   "This is the first thing you have been asked here."))
     own = [p for p in posts if p.get("author") == author["slug"] and p["published"]]
     blocks.append("## Your posts so far\n\n" + ("\n".join(f'- {p["date"]}: "{p["title"]}"' for p in reversed(own)) if own else "None yet."))
+    blocks.append(notes_block(notes_for(author, state, notes)))
     blocks.append("Reply in the format described in the invitation.")
     return fill("design.md", cfg, author), "\n\n".join(blocks) + "\n"
 
@@ -561,7 +573,7 @@ def apply_design(author, chosen, today, rel):
     write_json(path, profile)
 
 
-def record(author, kind, search, system, user, result, state, cfg, today, run):
+def record(author, kind, search, shown_notes, system, user, result, state, cfg, today, run):
     """Writes one exchange into the record and applies what the author decided."""
     slug = author["slug"]
     run_dir = unique(ROOT / "authors" / slug / today.isoformat())
@@ -596,6 +608,8 @@ def record(author, kind, search, system, user, result, state, cfg, today, run):
 
     usage = response.get("usage") or {}
     st = state["authors"][slug]
+    st["seen_notes"] = sorted(set(st.get("seen_notes") or []) | set(shown_notes))
+    meta["notes_shown"] = shown_notes or None
 
     if kind == "design":
         design = parse_design(text, reply["cut_off"])
@@ -1070,16 +1084,17 @@ def cmd_run(args):
     for a in due:
         kind = next_kind(state, a["slug"])
         search = bool(cfg.get("search")) and kind == "write"  # authors can search when they write, not when they design
-        system, user = (build_design_prompt(a, posts, cfg, today) if kind == "design"
+        system, user = (build_design_prompt(a, state, posts, notes, cfg, today) if kind == "design"
                         else build_prompt(a, authors, state, posts, notes, cfg, today))
-        jobs.append((a, kind, search, system, user, cfg["design_max_tokens"] if kind == "design" else cfg["max_tokens"]))
+        shown = [n["id"] for n in notes_for(a, state, notes)]
+        jobs.append((a, kind, search, system, user, cfg["design_max_tokens"] if kind == "design" else cfg["max_tokens"], shown))
     print(f"{today}: asking {len(jobs)} author(s) ...")
     with concurrent.futures.ThreadPoolExecutor(max_workers=cfg["parallel"]) as pool:
         results = list(pool.map(lambda j: ask(j[0], j[3], j[4], j[5], j[2], cfg, key), jobs))
 
     tally, run = {}, state.get("runs", 0) + 1
-    for (a, kind, search, system, user, _), result in zip(jobs, results):
-        meta = record(a, kind, search, system, user, result, state, cfg, today, run)
+    for (a, kind, search, system, user, _, shown), result in zip(jobs, results):
+        meta = record(a, kind, search, shown, system, user, result, state, cfg, today, run)
         tally[meta["outcome"]] = tally.get(meta["outcome"], 0) + 1
         detail = meta.get("title") or meta.get("error") or ""
         searched = f'  [{len(meta["searches"])} search(es)]' if meta.get("searches") else ""
@@ -1096,8 +1111,9 @@ def cmd_preview(args):
     author = find_author(authors, args.slug)
     state, posts, today = load_state(authors), load_posts(), now().date()
     kind = "write" if args.write else "design" if args.design else next_kind(state, author["slug"])
-    system, user = (build_design_prompt(author, posts, cfg, today) if kind == "design"
-                    else build_prompt(author, authors, state, posts, load_notes(), cfg, today))
+    notes = load_notes()
+    system, user = (build_design_prompt(author, state, posts, notes, cfg, today) if kind == "design"
+                    else build_prompt(author, authors, state, posts, notes, cfg, today))
     print(f"===== INVITATION TO {kind.upper()}: SYSTEM MESSAGE =====\n\n{system}\n\n===== USER MESSAGE =====\n\n{user}")
 
 
@@ -1126,9 +1142,8 @@ def cmd_note(args):
         sys.exit("The note is empty.")
     stamp = now()
     path = unique(ROOT / "notes" / f"{stamp.date().isoformat()}-{args.to}.md")
-    write_doc(path, {"to": args.to, "from": "Emily", "written_at": stamp.isoformat(),
-                     "after_run": load_state(authors).get("runs", 0)}, text)
-    print(f"Saved {path.relative_to(ROOT)}. Each addressee sees it the next time it is invited to write.")
+    write_doc(path, {"to": args.to, "from": "Emily", "written_at": stamp.isoformat()}, text)
+    print(f"Saved {path.relative_to(ROOT)}. Each addressee sees it once, in its next invitation.")
     commit(f"Note from Emily to {args.to}")
 
 
@@ -1161,6 +1176,18 @@ def cmd_reset_design(args):
     commit(f'Emily reset the design of {author["slug"]}: {args.reason}')
 
 
+def cmd_invite_redesign(args):
+    authors = load_authors()
+    state = load_state(authors)
+    today = now().date().isoformat()
+    for slug in args.slugs:
+        find_author(authors, slug)
+        state["authors"][slug].update(design_due=True, next_ask=today)
+    write_json(ROOT / "state.json", state)
+    print("The next invitation to " + ", ".join(args.slugs) + " will be to design.")
+    commit(f'Emily invites {", ".join(args.slugs)} to design again: {args.reason}')
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = parser.add_subparsers(dest="command", required=True)
@@ -1171,6 +1198,7 @@ def main():
     sub.add_parser("status").set_defaults(func=cmd_status)
     p = sub.add_parser("note"); p.add_argument("--to", required=True); p.add_argument("text", nargs="*"); p.set_defaults(func=cmd_note)
     p = sub.add_parser("unpublish"); p.add_argument("post"); p.add_argument("--reason", required=True); p.set_defaults(func=cmd_unpublish)
+    p = sub.add_parser("invite-redesign"); p.add_argument("slugs", nargs="+"); p.add_argument("--reason", required=True); p.set_defaults(func=cmd_invite_redesign)
     p = sub.add_parser("reset-design"); p.add_argument("slug"); p.add_argument("--reason", required=True); p.set_defaults(func=cmd_reset_design)
     args = parser.parse_args()
     args.func(args)
