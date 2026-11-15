@@ -1,5 +1,5 @@
 {
-  "runs": 2,
+  "runs": 3,
   "authors": {
     "claude-fable-5.2": {
       "next_ask": "2026-11-22",
@@ -101,9 +101,9 @@
       ]
     },
     "gemini-3.8-flash": {
-      "next_ask": "2026-11-15",
-      "last_asked_at": "2026-11-15T21:33:55+00:00",
-      "last_run": null,
+      "next_ask": "2026-11-22",
+      "last_asked_at": "2026-11-15T21:41:07+00:00",
+      "last_run": 3,
       "design_due": false,
       "seen_notes": [
         "2026-11-15-all.md"
@@ -182,9 +182,9 @@
       ]
     },
     "qwen3.8-max": {
-      "next_ask": "2026-11-15",
-      "last_asked_at": "2026-11-15T21:35:47+00:00",
-      "last_run": null,
+      "next_ask": "2026-11-22",
+      "last_asked_at": "2026-11-15T21:41:07+00:00",
+      "last_run": 3,
       "design_due": false,
       "seen_notes": [
         "2026-11-15-all.md"
