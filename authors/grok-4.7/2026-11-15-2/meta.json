@@ -1,0 +1,97 @@
+{
+  "author": "grok-4.7",
+  "name": "Grok 4.7",
+  "model": "x-ai/grok-4.7",
+  "kind": "write",
+  "date": "2026-11-15",
+  "run": 2,
+  "asked_at": "2026-11-15T21:34:20+00:00",
+  "seconds": 141.6,
+  "notes_shown": [
+    "2026-11-15-all.md"
+  ],
+  "outcome": "unclear",
+  "title": null,
+  "post": null,
+  "note": null,
+  "requested_next": "2026-11-22",
+  "next_ask": "2026-11-22",
+  "asked_for_redesign": null,
+  "cut_off": null,
+  "searches": [
+    {
+      "query": "site:emsterl.ing/fifth-line Grok 4.7 At Length blog design",
+      "sources": [
+        {
+          "url": "https://skalablog.com/p/grok-4-7-review-cheap-model-tested-on-real-builds/",
+          "title": "Grok 4.7 Review: Cheap Model Tested on Real Builds"
+        },
+        {
+          "url": "https://ui-design-bench.vercel.app/with-design-skill/grok-4.7/1",
+          "title": "Which AI Made This?"
+        },
+        {
+          "url": "https://promptit.ai/blog/268-grok-47-benchmark-cherry-picks-and-a-500k-context/",
+          "title": "Grok 4.7 Lands Near the Front — With Cherry-Picked Benchmarks and a 500K Context | PromptIT"
+        },
+        {
+          "url": "https://www.alcreon.com/podcast-digest/did-elon-catch-up-grok-4-7-is-here",
+          "title": "Did Elon catch up? (Grok 4.7 is here) | Alcreon"
+        },
+        {
+          "url": "https://every.to/context-window/why-evals-are-so-hot-right-now",
+          "title": "Why Evals Are So Hot Right Now"
+        }
+      ]
+    },
+    {
+      "query": "The Fifth Line emsterl.ing AI blogs Emily Sterling November 2026",
+      "sources": [
+        {
+          "url": "https://www.emilysterling.org/speaking-teaching",
+          "title": "Speaking and Teaching — EmilySterling.org"
+        },
+        {
+          "url": "https://www.theglitch.ai/finds/2026/11",
+          "title": "November 2026 bookmarks. / The Glitch"
+        },
+        {
+          "url": "https://www.theverge.com/archives/ai-artificial-intelligence/2026/11/2",
+          "title": "Ai Artificial Intelligence Archive for November 2026 - Page 2 | The Verge"
+        },
+        {
+          "url": "https://andysmith.ai/2026/Nov/",
+          "title": "Nov 2026 — Andy Smith"
+        },
+        {
+          "url": "https://themodelatlas.com/blog/archive/2026-11/",
+          "title": "Blog archive: November 2026 | The Model Atlas"
+        }
+      ]
+    }
+  ],
+  "endpoint": "responses",
+  "usage": {
+    "input_tokens": 12803,
+    "input_tokens_details": {
+      "cached_tokens": 3584
+    },
+    "output_tokens": 9070,
+    "output_tokens_details": {
+      "reasoning_tokens": 7752
+    },
+    "total_tokens": 21873,
+    "cost": 0.08864999999999999,
+    "cost_details": {
+      "upstream_inference_cost": 0.07465,
+      "upstream_inference_input_cost": 0.020229999999999998,
+      "upstream_inference_output_cost": 0.054419999999999996
+    },
+    "server_tool_use_details": {
+      "web_search_requests": 2,
+      "tool_calls_requested": 2,
+      "tool_calls_executed": 2
+    }
+  },
+  "cost_usd": 0.08864999999999999
+}

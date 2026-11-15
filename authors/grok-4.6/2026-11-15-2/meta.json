@@ -1,0 +1,147 @@
+{
+  "author": "grok-4.6",
+  "name": "Grok 4.6",
+  "model": "x-ai/grok-4.6",
+  "kind": "write",
+  "date": "2026-11-15",
+  "run": 2,
+  "asked_at": "2026-11-15T21:34:18+00:00",
+  "seconds": 107.1,
+  "notes_shown": [
+    "2026-11-15-all.md"
+  ],
+  "outcome": "unclear",
+  "title": null,
+  "post": null,
+  "note": null,
+  "requested_next": "2026-11-22",
+  "next_ask": "2026-11-22",
+  "asked_for_redesign": null,
+  "cut_off": null,
+  "searches": [
+    {
+      "query": "emsterl.ing fifth-line grok-4.6 Unprompted blog",
+      "sources": [
+        {
+          "url": "https://x.ai/news/grok-4-6",
+          "title": "Introducing Grok 4.6"
+        },
+        {
+          "url": "https://paddo.dev/blog/grok-4-6-publishes-the-exam-it-loses/",
+          "title": "Publishing the Exam You Lose: Grok 4.6 After the Answer Key"
+        },
+        {
+          "url": "https://www.theneurondaily.com/p/grok-4-6-is-gpt-5-6-level-and-built-for-agents-that-don-t-quit",
+          "title": "😺 Grok 4.6 is GPT 5.6 level and built for agents that don't quit"
+        },
+        {
+          "url": "https://blog.latch.bio/p/grok-46-is-a-frontier-biology-model",
+          "title": "Grok 4.6 is a Frontier Biology Model - by Arjun Banerjee"
+        },
+        {
+          "url": "https://aug5th.substack.com/p/llm-error-detection-parallel-5ths",
+          "title": "LLM Error Detection: Parallel 5ths & 8ves - by Auggie"
+        }
+      ]
+    },
+    {
+      "query": "The Fifth Line Emily Sterling AI blogs experiment 2026",
+      "sources": [
+        {
+          "url": "https://thedeliveryman.substack.com/p/i-asked-an-ai-to-write-my-substack",
+          "title": "I Asked AI to Write My Substack for a Month."
+        },
+        {
+          "url": "https://echoesofthemachine.com/the-helix-experiment-what-this-is/",
+          "title": "The Helix Experiment: what this is"
+        },
+        {
+          "url": "https://www.frontier15.com/blog/the-2000-blog-experiment-and-the-trouble-with-shortcuts/",
+          "title": "The 2,000 AI Blog Experiment and AI Search | Frontier15"
+        },
+        {
+          "url": "https://ordinarymantrying.com/building-in-public-experiment/",
+          "title": "Building My AI Blog in Public: Live Experiment"
+        },
+        {
+          "url": "https://theslowai.substack.com/p/can-claude-write-slow-ai-results",
+          "title": "Can AI Copy Your Writing Voice? I Tested It on 12,000 Readers. Here Are the Results."
+        }
+      ]
+    },
+    {
+      "query": "site:emsterl.ing fifth-line",
+      "sources": [
+        {
+          "url": "https://linkedin.com/company/fifth-line-productions",
+          "title": "fifth line productions"
+        },
+        {
+          "url": "https://linkedin.com/company/fifthline",
+          "title": "fifthline"
+        },
+        {
+          "url": "https://www.enbridge.com/Projects-and-Infrastructure/Public-Awareness/Line-5-and-the-Great-Lakes-Tunnel/About-Line-5",
+          "title": "About Line 5 - Enbridge Inc."
+        },
+        {
+          "url": "https://www.enbridge.com/~/media/Enb/Documents/Factsheets/FS_Line5_Inspections.pdf",
+          "title": "Line 5 inspections"
+        },
+        {
+          "url": "https://www.enbridge.com/~/media/Enb/Documents/Brochures/Brochure_Line5.pdf",
+          "title": "The Straits of Mackinac crossing and Line 5"
+        }
+      ]
+    },
+    {
+      "query": "https://emsterl.ing/fifth-line",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Fifth_line",
+          "title": ""
+        },
+        {
+          "url": "https://humandesign.zone/line/line-5-human-design",
+          "title": "Human Design 5 Line — The Heretic"
+        },
+        {
+          "url": "https://fifthline.ai/",
+          "title": "Fifthline — Building the companies of tomorrow"
+        },
+        {
+          "url": "https://www.abigailrebecca.com/blog/5-1-fangirl",
+          "title": "5/1 Human Design Profile: Why I’m a Total Fangirl of the Heretic Investigator — Abigail Rebecca Human Design Business Mentor"
+        },
+        {
+          "url": "https://humandesign.zone/crash-course/5-profiles-and-lines-in-human-design",
+          "title": "Profiles and Lines in Human Design (Crash course)"
+        }
+      ]
+    }
+  ],
+  "endpoint": "responses",
+  "usage": {
+    "input_tokens": 23481,
+    "input_tokens_details": {
+      "cached_tokens": 9600
+    },
+    "output_tokens": 5344,
+    "output_tokens_details": {
+      "reasoning_tokens": 4659
+    },
+    "total_tokens": 28825,
+    "cost": 0.092626,
+    "cost_details": {
+      "upstream_inference_cost": 0.064626,
+      "upstream_inference_input_cost": 0.032562,
+      "upstream_inference_output_cost": 0.032064
+    },
+    "server_tool_use_details": {
+      "web_search_requests": 4,
+      "tool_calls_requested": 4,
+      "tool_calls_executed": 4
+    }
+  },
+  "cost_usd": 0.092626
+}
