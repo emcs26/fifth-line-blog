@@ -11,6 +11,7 @@ Standard library only, so a system Python upgrade cannot break it.
   blog.py status                        who gets asked what, and when
   blog.py note --to all|SLUG TEXT       leave a note; each addressee sees it once, in its next invitation
   blog.py invite-redesign SLUG ... --reason T   make an author's next invitation a design invitation
+  blog.py reread EXCHANGE ... --reason T        re-read a stored reply the script got wrong, and mark the correction
   blog.py unpublish POST --reason T     take a post off the site (the record stays)
   blog.py reset-design SLUG --reason T  put a blog back on the base design (the record stays)
 
@@ -347,8 +348,12 @@ def ask(author, system, user, max_tokens, search, cfg, key):
 
 
 def read_reply(response):
-    """The reply's text, whether it was cut off, and any web searches, from either API shape."""
-    titles, text, searches = {}, "", []
+    """The reply's text, whether it was cut off, and any web searches, from either API shape.
+
+    A model that searches may say something before or between searches ("let me look that up").
+    Those remarks are returned as "interim"; the reply itself is the last message.
+    """
+    titles, text, searches, messages = {}, "", [], []
 
     def note(annotation):
         cite = annotation.get("url_citation") if isinstance(annotation.get("url_citation"), dict) else annotation
@@ -358,16 +363,19 @@ def read_reply(response):
     if "output" in response:  # Responses API
         for item in response.get("output") or []:
             if item.get("type") == "message":
+                said = ""
                 for part in item.get("content") or []:
                     if isinstance(part, dict) and part.get("type") == "output_text":
-                        text += part.get("text") or ""
+                        said += part.get("text") or ""
                         for a in part.get("annotations") or []:
                             note(a)
+                messages.append(said)
             elif "web_search" in (item.get("type") or ""):
                 action = item.get("action") or {}
                 searches.append({"query": action.get("query"),
                                  "urls": [x.get("url") for x in action.get("sources") or [] if x.get("url")]})
         cut_off = response.get("status") == "incomplete"
+        text = messages[-1] if messages else ""
     else:  # Chat completions
         choice = (response.get("choices") or [{}])[0]
         message = choice.get("message") or {}
@@ -382,7 +390,8 @@ def read_reply(response):
             searches.append({"query": None, "urls": list(titles)})
     for search in searches:
         search["sources"] = [{"url": u, "title": titles.get(u, "")} for u in search.pop("urls")]
-    return {"text": text, "cut_off": cut_off, "searches": searches}
+    return {"text": text, "cut_off": cut_off, "searches": searches,
+            "interim": [m for m in messages[:-1] if m.strip()]}
 
 
 def without_excerpts(response):
@@ -573,6 +582,19 @@ def apply_design(author, chosen, today, rel):
     write_json(path, profile)
 
 
+def publish(author, parsed, reply, day, run, rel):
+    """Writes the post file for a reply that chose to write. Returns its path in the record."""
+    post = unique(ROOT / "posts" / f'{day.isoformat()}-{author["slug"]}-{slugify(parsed["title"])}.md')
+    head = {"title": parsed["title"], "author": author["slug"], "name": author["name"], "model": author["model"],
+            "date": day.isoformat(), "published_at": now().isoformat(), "run": run, "record": rel, "published": "true"}
+    if reply["cut_off"]:
+        head["cut_off"] = "true"
+    if reply["searches"]:
+        head["searches"] = len(reply["searches"])
+    write_doc(post, head, parsed["body"])
+    return f"posts/{post.name}"
+
+
 def record(author, kind, search, shown_notes, system, user, result, state, cfg, today, run):
     """Writes one exchange into the record and applies what the author decided."""
     slug = author["slug"]
@@ -596,9 +618,11 @@ def record(author, kind, search, shown_notes, system, user, result, state, cfg, 
     meta = {"author": slug, "name": author["name"], "model": author["model"], "kind": kind,
             "date": today.isoformat(), "run": run, "asked_at": result["asked_at"], "seconds": result["seconds"]}
     reply = (read_reply(response) if response and not result["error"]
-             else {"text": "", "cut_off": False, "searches": []})
+             else {"text": "", "cut_off": False, "searches": [], "interim": []})
     text = reply["text"]
     (run_dir / "response.md").write_text(text if text.strip() else "_(Nothing came back. See meta.json.)_\n", encoding="utf-8")
+    if reply["interim"]:
+        (run_dir / "interim.md").write_text("\n\n---\n\n".join(reply["interim"]) + "\n", encoding="utf-8")
 
     if result["error"]:
         # Nothing came back, so this does not count as being asked: try again next run.
@@ -626,15 +650,7 @@ def record(author, kind, search, shown_notes, system, user, result, state, cfg, 
                     requested_next=parsed["requested_next"], next_ask=parsed["next_ask"].isoformat(),
                     asked_for_redesign=parsed["redesign"] or None)
         if parsed["outcome"] == "wrote":
-            post = unique(ROOT / "posts" / f'{today.isoformat()}-{slug}-{slugify(parsed["title"])}.md')
-            head = {"title": parsed["title"], "author": slug, "name": author["name"], "model": author["model"],
-                    "date": today.isoformat(), "published_at": now().isoformat(), "run": run, "record": rel, "published": "true"}
-            if reply["cut_off"]:
-                head["cut_off"] = "true"
-            if reply["searches"]:
-                head["searches"] = len(reply["searches"])
-            write_doc(post, head, parsed["body"])
-            meta["post"] = f"posts/{post.name}"
+            meta["post"] = publish(author, parsed, reply, today, run, rel)
         st.update(next_ask=meta["next_ask"], last_asked_at=result["asked_at"], last_run=run)
         if parsed["redesign"]:
             st["design_due"] = True
@@ -889,6 +905,8 @@ def log_entry(cfg, author, r, by_file):
         what += f' · asked to be left until {esc(r.get("next_ask"))}'
     if r.get("asked_for_redesign"):
         what += " · asked for a redesign"
+    if r.get("corrected"):
+        what += f' · the script first failed to read this reply; corrected {esc(r["corrected"]["on"][:10])}'
     said = f'<p class="said">{esc(r["note"][:600])}</p>' if r.get("note") else ""
     if r.get("searches"):
         queries = [x["query"] for x in r["searches"] if x.get("query")]
@@ -1176,6 +1194,51 @@ def cmd_reset_design(args):
     commit(f'Emily reset the design of {author["slug"]}: {args.reason}')
 
 
+def cmd_reread(args):
+    """Re-reads stored replies with the current reader. For when the script, not the author, got it wrong."""
+    cfg, authors = load_config(), load_authors()
+    state, fixed = load_state(authors), []
+    for rel in (r.rstrip("/") for r in args.exchanges):
+        run_dir = ROOT / rel
+        meta = json.loads((run_dir / "meta.json").read_text(encoding="utf-8"))
+        raw = json.loads((run_dir / "raw.json").read_text(encoding="utf-8"))
+        if meta.get("kind") != "write" or not raw.get("response") or raw.get("error"):
+            print(f"{rel}: skipped. Only a writing exchange that got a reply can be re-read.")
+            continue
+        if meta["outcome"] == "wrote":
+            print(f"{rel}: skipped. This reply was already published; take the post down instead.")
+            continue
+        author = find_author(authors, meta["author"])
+        day = dt.date.fromisoformat(meta["date"])
+        reply = read_reply(raw["response"])
+        parsed = parse_reply(reply["text"], day, cfg)
+        if parsed["outcome"] == meta["outcome"]:
+            print(f"{rel}: reads the same as before ({meta['outcome']}). Nothing changed.")
+            continue
+        (run_dir / "response.md").write_text(reply["text"] if reply["text"].strip() else "_(Nothing came back. See meta.json.)_\n", encoding="utf-8")
+        if reply["interim"]:
+            (run_dir / "interim.md").write_text("\n\n---\n\n".join(reply["interim"]) + "\n", encoding="utf-8")
+        was = meta["outcome"]
+        meta.update(outcome=parsed["outcome"], title=parsed["title"], post=None,
+                    note=parsed["body"][:2000] if parsed["outcome"] == "passed" and parsed["body"] else None,
+                    requested_next=parsed["requested_next"], next_ask=parsed["next_ask"].isoformat(),
+                    asked_for_redesign=parsed["redesign"] or None, searches=reply["searches"] or None,
+                    corrected={"on": now().isoformat(), "was": was, "why": args.reason})
+        if parsed["outcome"] == "wrote":
+            meta["post"] = publish(author, parsed, reply, day, meta["run"], rel)
+        st = state["authors"][author["slug"]]
+        st["next_ask"] = meta["next_ask"]
+        if parsed["redesign"]:
+            st["design_due"] = True
+        write_json(run_dir / "meta.json", meta)
+        fixed.append(f'{author["name"]} ({was} -> {parsed["outcome"]})')
+        print(f'{rel}: was "{was}", now "{parsed["outcome"]}"' + (f': {parsed["title"]}' if parsed["title"] else ""))
+    if fixed:
+        write_json(ROOT / "state.json", state)
+        build_site(cfg, authors, state, load_posts())
+        commit(f'Corrected {", ".join(fixed)}: {args.reason}')
+
+
 def cmd_invite_redesign(args):
     authors = load_authors()
     state = load_state(authors)
@@ -1198,6 +1261,7 @@ def main():
     sub.add_parser("status").set_defaults(func=cmd_status)
     p = sub.add_parser("note"); p.add_argument("--to", required=True); p.add_argument("text", nargs="*"); p.set_defaults(func=cmd_note)
     p = sub.add_parser("unpublish"); p.add_argument("post"); p.add_argument("--reason", required=True); p.set_defaults(func=cmd_unpublish)
+    p = sub.add_parser("reread"); p.add_argument("exchanges", nargs="+"); p.add_argument("--reason", required=True); p.set_defaults(func=cmd_reread)
     p = sub.add_parser("invite-redesign"); p.add_argument("slugs", nargs="+"); p.add_argument("--reason", required=True); p.set_defaults(func=cmd_invite_redesign)
     p = sub.add_parser("reset-design"); p.add_argument("slug"); p.add_argument("--reason", required=True); p.set_defaults(func=cmd_reset_design)
     args = parser.parse_args()
