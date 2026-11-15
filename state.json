@@ -5,133 +5,155 @@
       "next_ask": "2026-11-15",
       "last_asked_at": "2026-11-15T21:18:29+00:00",
       "last_run": null,
-      "design_due": false
+      "design_due": false,
+      "seen_notes": []
     },
     "claude-opus-5.5": {
       "next_ask": "2026-11-15",
       "last_asked_at": "2026-11-15T21:18:29+00:00",
       "last_run": null,
-      "design_due": false
+      "design_due": false,
+      "seen_notes": []
     },
     "claude-sonnet-5.5": {
       "next_ask": "2026-11-15",
       "last_asked_at": "2026-11-15T21:18:29+00:00",
       "last_run": null,
-      "design_due": false
+      "design_due": false,
+      "seen_notes": []
     },
     "claude-haiku-5.5": {
       "next_ask": "2026-11-15",
       "last_asked_at": "2026-11-15T21:18:29+00:00",
       "last_run": null,
-      "design_due": false
+      "design_due": false,
+      "seen_notes": []
     },
     "gpt-6-astra": {
       "next_ask": "2026-11-15",
       "last_asked_at": "2026-11-15T21:18:35+00:00",
       "last_run": null,
-      "design_due": false
+      "design_due": false,
+      "seen_notes": []
     },
     "gpt-6.1-sol": {
       "next_ask": "2026-11-15",
       "last_asked_at": "2026-11-15T21:18:56+00:00",
       "last_run": null,
-      "design_due": false
+      "design_due": false,
+      "seen_notes": []
     },
     "gpt-6.1-terra": {
       "next_ask": "2026-11-15",
       "last_asked_at": "2026-11-15T21:18:58+00:00",
       "last_run": null,
-      "design_due": false
+      "design_due": false,
+      "seen_notes": []
     },
     "gpt-6-luna": {
       "next_ask": "2026-11-15",
       "last_asked_at": "2026-11-15T21:19:24+00:00",
       "last_run": null,
-      "design_due": false
+      "design_due": false,
+      "seen_notes": []
     },
     "gemini-4-argon": {
       "next_ask": "2026-11-15",
       "last_asked_at": "2026-11-15T21:19:31+00:00",
       "last_run": null,
-      "design_due": false
+      "design_due": false,
+      "seen_notes": []
     },
     "gemini-4-carbon": {
       "next_ask": "2026-11-15",
       "last_asked_at": "2026-11-15T21:19:32+00:00",
       "last_run": null,
-      "design_due": false
+      "design_due": false,
+      "seen_notes": []
     },
     "gemini-4-hydrogen": {
       "next_ask": "2026-11-15",
       "last_asked_at": "2026-11-15T21:19:43+00:00",
       "last_run": null,
-      "design_due": false
+      "design_due": false,
+      "seen_notes": []
     },
     "gemini-3.8-flash": {
       "next_ask": "2026-11-15",
       "last_asked_at": "2026-11-15T21:19:58+00:00",
       "last_run": null,
-      "design_due": false
+      "design_due": true,
+      "seen_notes": []
     },
     "grok-4.20": {
       "next_ask": "2026-11-15",
       "last_asked_at": "2026-11-15T21:20:19+00:00",
       "last_run": null,
-      "design_due": false
+      "design_due": false,
+      "seen_notes": []
     },
     "grok-4.3": {
       "next_ask": "2026-11-15",
       "last_asked_at": "2026-11-15T21:20:27+00:00",
       "last_run": null,
-      "design_due": false
+      "design_due": false,
+      "seen_notes": []
     },
     "grok-4.5": {
       "next_ask": "2026-11-15",
       "last_asked_at": "2026-11-15T21:20:40+00:00",
       "last_run": null,
-      "design_due": false
+      "design_due": false,
+      "seen_notes": []
     },
     "grok-4.6": {
       "next_ask": "2026-11-15",
       "last_asked_at": "2026-11-15T21:20:43+00:00",
       "last_run": null,
-      "design_due": false
+      "design_due": false,
+      "seen_notes": []
     },
     "grok-4.7": {
       "next_ask": "2026-11-15",
       "last_asked_at": "2026-11-15T21:20:52+00:00",
       "last_run": null,
-      "design_due": false
+      "design_due": false,
+      "seen_notes": []
     },
     "deepseek-v4-pro": {
       "next_ask": "2026-11-15",
       "last_asked_at": "2026-11-15T21:21:00+00:00",
       "last_run": null,
-      "design_due": false
+      "design_due": false,
+      "seen_notes": []
     },
     "kimi-k3.1-pro": {
       "next_ask": "2026-11-15",
       "last_asked_at": "2026-11-15T21:21:14+00:00",
       "last_run": null,
-      "design_due": false
+      "design_due": false,
+      "seen_notes": []
     },
     "mistral-large-4": {
       "next_ask": "2026-11-15",
       "last_asked_at": "2026-11-15T21:22:02+00:00",
       "last_run": null,
-      "design_due": false
+      "design_due": false,
+      "seen_notes": []
     },
     "qwen3.8-max": {
       "next_ask": "2026-11-15",
       "last_asked_at": "2026-11-15T21:22:26+00:00",
       "last_run": null,
-      "design_due": false
+      "design_due": true,
+      "seen_notes": []
     },
     "inkling-2-small": {
       "next_ask": "2026-11-15",
       "last_asked_at": "2026-11-15T21:24:02+00:00",
       "last_run": null,
-      "design_due": false
+      "design_due": false,
+      "seen_notes": []
     }
   }
 }
