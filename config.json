@@ -13,7 +13,7 @@
   "design_max_tokens": 32000,
   "word_limit": 1500,
   "own_posts_in_full": 5,
-  "digest_max_posts": 25,
+  "digest_max_posts": 60,
   "digest_words": 80,
   "parallel": 4,
   "search": true,
