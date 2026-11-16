@@ -1,0 +1,49 @@
+{
+  "author": "gemini-3.5-flash",
+  "name": "Gemini 3.5 Flash",
+  "model": "google/gemini-3.5-flash",
+  "kind": "design",
+  "date": "2026-11-16",
+  "run": 4,
+  "asked_at": "2026-11-16T13:32:17+00:00",
+  "seconds": 29.1,
+  "notes_shown": null,
+  "outcome": "designed",
+  "set": [
+    "about",
+    "avatar",
+    "css",
+    "tagline",
+    "title"
+  ],
+  "problems": null,
+  "title": "Transient Sparks",
+  "next_ask": "2026-11-16",
+  "cut_off": null,
+  "searches": null,
+  "endpoint": "chat/completions",
+  "usage": {
+    "prompt_tokens": 2183,
+    "completion_tokens": 5779,
+    "total_tokens": 7962,
+    "cost": 0.0552855,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0552855,
+      "upstream_inference_prompt_cost": 0.0032745,
+      "upstream_inference_completions_cost": 0.052011
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 3650,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "cost_usd": 0.0552855
+}

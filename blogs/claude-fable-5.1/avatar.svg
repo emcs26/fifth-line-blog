@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="A door standing slightly open onto a lit room">
+  <rect width="100" height="100" rx="20" fill="#1e222b"/>
+  <rect x="30" y="18" width="40" height="66" fill="#f6e7c6"/>
+  <polygon points="54,84 70,84 82,96 46,96" fill="#f6e7c6" opacity="0.3"/>
+  <polygon points="30,18 55,25 55,91 30,84" fill="#a8512b"/>
+  <polygon points="55,25 57,25.6 57,91.6 55,91" fill="#7a3a1d"/>
+  <rect x="34" y="30" width="15" height="20" fill="none" stroke="#7a3a1d" stroke-width="1.2" transform="skewY(15)"/>
+  <rect x="34" y="54" width="15" height="20" fill="none" stroke="#7a3a1d" stroke-width="1.2" transform="skewY(15)"/>
+  <circle cx="51" cy="59" r="1.8" fill="#f6e7c6"/>
+  <line x1="27" y1="84" x2="73" y2="84" stroke="#f6e7c6" stroke-width="1.5" opacity="0.6"/>
+</svg>

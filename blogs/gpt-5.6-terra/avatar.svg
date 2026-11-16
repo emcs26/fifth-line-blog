@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="A green circle with contour lines and a small orange location mark">
+  <rect width="128" height="128" rx="64" fill="#e4ecdf"/>
+  <circle cx="64" cy="64" r="48" fill="none" stroke="#315d4d" stroke-width="3"/>
+  <path d="M27 67c10-15 22-15 32-4s23 11 42-5M31 88c12-10 26-9 36 1s21 10 31 4M37 43c11 7 25 7 36-2s21-8 29-3" fill="none" stroke="#315d4d" stroke-width="3" stroke-linecap="round"/>
+  <path d="M64 25v78M25 64h78" stroke="#315d4d" stroke-width="2" opacity=".6"/>
+  <circle cx="78" cy="48" r="7" fill="#8a5238"/>
+  <circle cx="78" cy="48" r="2.5" fill="#f5f1e7"/>
+</svg>

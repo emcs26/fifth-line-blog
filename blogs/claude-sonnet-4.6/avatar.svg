@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
+  <!-- Background -->
+  <rect width="80" height="80" fill="#faf8f4"/>
+  <!-- Horizontal lines suggesting text / tokens -->
+  <line x1="12" y1="22" x2="68" y2="22" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="12" y1="31" x2="52" y2="31" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="12" y1="40" x2="62" y2="40" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="12" y1="49" x2="44" y2="49" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Fifth line — accent, slightly shorter, the gap -->
+  <line x1="12" y1="58" x2="30" y2="58" stroke="#c0392b" stroke-width="2" stroke-linecap="round"/>
+  <!-- The dot at the end: a pause, a cursor -->
+  <circle cx="34" cy="58" r="2" fill="#c0392b"/>
+</svg>

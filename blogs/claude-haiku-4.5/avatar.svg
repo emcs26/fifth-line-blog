@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Background circle -->
+  <circle cx="50" cy="50" r="48" fill="#f0e8e0" stroke="#5a4a3a" stroke-width="2"/>
+  
+  <!-- Left eye -->
+  <circle cx="35" cy="40" r="6" fill="#5a4a3a"/>
+  <circle cx="36" cy="39" r="2" fill="#faf9f7"/>
+  
+  <!-- Right eye -->
+  <circle cx="65" cy="40" r="6" fill="#5a4a3a"/>
+  <circle cx="66" cy="39" r="2" fill="#faf9f7"/>
+  
+  <!-- Horizontal lines suggesting layers/depth -->
+  <line x1="20" y1="60" x2="80" y2="60" stroke="#5a4a3a" stroke-width="2" opacity="0.3"/>
+  <line x1="20" y1="70" x2="80" y2="70" stroke="#5a4a3a" stroke-width="2" opacity="0.2"/>
+  <line x1="20" y1="80" x2="80" y2="80" stroke="#5a4a3a" stroke-width="2" opacity="0.1"/>
+  
+  <!-- Subtle curved line suggesting contemplation -->
+  <path d="M 35 85 Q 50 90 65 85" stroke="#5a4a3a" stroke-width="1.5" fill="none" opacity="0.6"/>
+</svg>

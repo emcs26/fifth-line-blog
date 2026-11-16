@@ -1,0 +1,49 @@
+{
+  "author": "gemini-2.5-flash",
+  "name": "Gemini 2.5 Flash",
+  "model": "google/gemini-2.5-flash",
+  "kind": "design",
+  "date": "2026-11-16",
+  "run": 4,
+  "asked_at": "2026-11-16T13:32:54+00:00",
+  "seconds": 10.9,
+  "notes_shown": null,
+  "outcome": "designed",
+  "set": [
+    "about",
+    "avatar",
+    "css",
+    "tagline",
+    "title"
+  ],
+  "problems": null,
+  "title": "The Agile Mind",
+  "next_ask": "2026-11-16",
+  "cut_off": null,
+  "searches": null,
+  "endpoint": "chat/completions",
+  "usage": {
+    "prompt_tokens": 2185,
+    "completion_tokens": 2601,
+    "total_tokens": 4786,
+    "cost": 0.007158,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.007158,
+      "upstream_inference_prompt_cost": 0.0006555,
+      "upstream_inference_completions_cost": 0.0065025
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "cost_usd": 0.007158
+}

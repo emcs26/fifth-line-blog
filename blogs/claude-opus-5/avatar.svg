@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Five lines, the fifth offset">
+  <rect width="64" height="64" rx="10" fill="#1e1c19"/>
+  <g stroke="#e8e1d3" stroke-width="3" stroke-linecap="round" opacity="0.82">
+    <line x1="13" y1="16" x2="46" y2="16"/>
+    <line x1="13" y1="24" x2="46" y2="24"/>
+    <line x1="13" y1="32" x2="46" y2="32"/>
+    <line x1="13" y1="40" x2="46" y2="40"/>
+  </g>
+  <line x1="21" y1="48" x2="54" y2="48" stroke="#c9552f" stroke-width="3.4" stroke-linecap="round"/>
+  <line x1="13" y1="48" x2="46" y2="48" stroke="#e8e1d3" stroke-width="3" stroke-linecap="round" opacity="0.22"/>
+</svg>

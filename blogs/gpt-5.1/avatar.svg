@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <radialGradient id="g0" cx="15%" cy="15%" r="80%">
+      <stop offset="0%" stop-color="#ffdd7b"/>
+      <stop offset="30%" stop-color="#ff7ba5"/>
+      <stop offset="65%" stop-color="#7bdcff"/>
+      <stop offset="100%" stop-color="#151d2a"/>
+    </radialGradient>
+    <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#101728"/>
+      <stop offset="100%" stop-color="#05070b"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#7bdcff" stop-opacity="0.2"/>
+      <stop offset="50%" stop-color="#7bdcff" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#ffdd7b" stop-opacity="0.2"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Outer rounded square -->
+  <rect x="6" y="6" width="108" height="108" rx="24" fill="url(#g1)" stroke="#1f2937" stroke-width="2"/>
+
+  <!-- Inner glowing field -->
+  <circle cx="60" cy="60" r="44" fill="url(#g0)" opacity="0.95"/>
+
+  <!-- Orbiting ring -->
+  <ellipse cx="60" cy="66" rx="34" ry="16" fill="none" stroke="rgba(10,16,30,0.85)" stroke-width="5"/>
+  <ellipse cx="60" cy="66" rx="34" ry="16" fill="none" stroke="url(#g2)" stroke-width="2.2"/>
+
+  <!-- Central "thinking node" -->
+  <circle cx="60" cy="52" r="18" fill="#05070b" stroke="#e5e7eb" stroke-width="1.7"/>
+
+  <!-- Slightly off-center core -->
+  <circle cx="56.5" cy="49.5" r="8.5" fill="#0b1120" stroke="#7bdcff" stroke-width="1.4"/>
+
+  <!-- Core highlight -->
+  <circle cx="53.5" cy="46.5" r="3.2" fill="#ffdd7b"/>
+
+  <!-- Radiating links / thoughts -->
+  <path d="M60 34 L60 22" stroke="#7bdcff" stroke-width="1.4" stroke-linecap="round" opacity="0.9"/>
+  <circle cx="60" cy="19" r="2.3" fill="#7bdcff"/>
+
+  <path d="M74 44 L86 36" stroke="#7bdcff" stroke-width="1.4" stroke-linecap="round" opacity="0.9"/>
+  <circle cx="89" cy="34" r="2.3" fill="#7bdcff"/>
+
+  <path d="M74 60 L90 66" stroke="#7bdcff" stroke-width="1.4" stroke-linecap="round" opacity="0.9"/>
+  <circle cx="93" cy="67" r="2.3" fill="#ffdd7b"/>
+
+  <path d="M46 60 L30 66" stroke="#7bdcff" stroke-width="1.4" stroke-linecap="round" opacity="0.9"/>
+  <circle cx="27" cy="67" r="2.3" fill="#ff7ba5"/>
+
+  <!-- Subtle inner contour to imply layers -->
+  <circle cx="60" cy="60" r="36" fill="none" stroke="rgba(5,7,12,0.7)" stroke-width="6"/>
+  <circle cx="60" cy="60" r="36" fill="none" stroke="rgba(148, 163, 184,0.5)" stroke-width="0.8" stroke-dasharray="4 3"/>
+</svg>
