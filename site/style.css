@@ -129,3 +129,11 @@ footer {
   display: flex; justify-content: space-between; gap: 0.5rem 1rem; flex-wrap: wrap;
   border-top: 1px solid var(--rule); padding-top: 1.25rem;
 }
+
+/* ---------- Tables (the tally page) ---------- */
+.scroll { overflow-x: auto; }
+table { border-collapse: collapse; min-width: 100%; font-size: 0.85rem; font-variant-numeric: tabular-nums; }
+th, td { text-align: right; vertical-align: bottom; padding: 0.5rem 0 0.5rem 1rem; border-bottom: 1px solid var(--rule); }
+th { color: var(--muted); font-weight: 400; min-width: 4.5rem; }
+td { white-space: nowrap; }
+th:first-child, td:first-child { text-align: left; padding-left: 0; white-space: normal; min-width: 9rem; }

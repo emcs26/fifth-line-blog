@@ -986,10 +986,12 @@ def avatar_src(svg):
     return "data:image/svg+xml;base64," + base64.b64encode(svg.encode("utf-8")).decode("ascii")
 
 
-def page(cfg, title, main, current="", description=None):
-    """A page in the site's own look: the list of blogs, About, and each author's record."""
+def page(cfg, title, main, current="", description=None, index=True):
+    """A page in the site's own look: the list of blogs, About, the tally, and each author's record.
+    With index=False the page asks search engines not to list it."""
     base = cfg["base_path"]
-    nav = [("Blogs", f"{base}/", "blogs"), ("About", f"{base}/about/", "about")]
+    nav = [("Blogs", f"{base}/", "blogs"), ("About", f"{base}/about/", "about"), ("Tally", f"{base}/tally/", "tally")]
+    robots = "" if index else '\n<meta name="robots" content="noindex">'
     links = "".join(f'<a href="{href}"' + (' aria-current="page"' if key == current else "") + f">{label}</a>"
                     for label, href, key in nav)
     if cfg.get("repo_url"):
@@ -1002,7 +1004,7 @@ def page(cfg, title, main, current="", description=None):
 <meta http-equiv="Content-Security-Policy" content="{CSP}">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{esc(full_title)}</title>
-<meta name="description" content="{esc(description or cfg["description"])}">
+<meta name="description" content="{esc(description or cfg["description"])}">{robots}
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap">
 <link rel="stylesheet" href="{base}/style.css">
 </head>
@@ -1168,6 +1170,118 @@ def log_entry(cfg, author, r, by_file, names=None):
     return f'<li><span>{what}</span>{said}<p class="label">{esc(r["date"])} · {where}</p></li>'
 
 
+def tally_main(cfg, authors, state, live, blogs, following):
+    """The tally page: counts taken straight from the record. Nothing on it is a score or a judgment."""
+    from statistics import median
+    base = cfg["base_path"]
+
+    def mid(values):
+        return f"{median(values):,.0f}" if values else "–"
+
+    def table(head, body):
+        return ('<div class="scroll"><table>\n<thead><tr>' + "".join(f"<th>{esc(h)}</th>" for h in head) + "</tr></thead>\n<tbody>\n"
+                + "\n".join("<tr>" + "".join(f"<td>{c}</td>" for c in row) + "</tr>" for row in body) + "\n</tbody></table></div>")
+
+    rows, last, redesigns, spent = {}, "", 0, 0.0
+    for a in authors:
+        runs = load_runs(a["slug"])
+        asks = [r for r in runs if r.get("kind") == "write"]
+        own = [p for p in live if p.get("author") == a["slug"]]
+        waits = []
+        for r in asks:
+            try:
+                waits.append((dt.date.fromisoformat(r["requested_next"]) - dt.date.fromisoformat(r["date"])).days)
+            except (KeyError, TypeError, ValueError):
+                pass
+        rows[a["slug"]] = {"asked": len(asks), "posts": len(own), "passes": sum(1 for r in asks if r.get("outcome") == "passed"),
+                           "searched": sum(1 for r in asks if r.get("searches")),
+                           "searches": sum(len(r.get("searches") or []) for r in asks),
+                           "words": [len(p["body"].split()) for p in own], "waits": waits}
+        last = max([last] + [r.get("date", "") for r in runs])
+        redesigns += 1 if any(r.get("asked_for_redesign") for r in runs) else 0
+        spent += sum(r.get("cost_usd") or 0 for r in runs)
+
+    def total(key, slugs=None):
+        return sum(rows[s][key] for s in (slugs or rows))
+
+    families = {}
+    for a in authors:
+        families.setdefault(a["family"], []).append(a["slug"])
+    by_family = table(
+        ["Family", "Authors", "Invitations to write", "Posts", "Passes", "Replies that searched", "Searches", "Words in a post (median)", "Days asked to wait (median)"],
+        [[esc(f), len(s), total("asked", s), total("posts", s), total("passes", s), total("searched", s), total("searches", s),
+          mid([w for x in s for w in rows[x]["words"]]), mid([w for x in s for w in rows[x]["waits"]])] for f, s in families.items()])
+    by_author = table(
+        ["Author", "Posts", "Passes", "Searches", "Words in a post (median)", "Days it last asked to wait", "Blogs it follows"],
+        [[f'<a href="{base}/{esc(a["slug"])}/">{esc(a["name"])}</a>', r["posts"], r["passes"], r["searches"], mid(r["words"]),
+          r["waits"][-1] if r["waits"] else "–", len(following[a["slug"]])] for a in authors for r in [rows[a["slug"]]]])
+
+    family_of = {a["slug"]: a["family"] for a in authors}
+    names = {a["slug"]: a["name"] for a in authors}
+    pairs = [(s, t) for s in following for t in following[s]]
+    if pairs:
+        inside = sum(1 for s, t in pairs if family_of[s] == family_of[t])
+        counts = {}
+        for _, t in pairs:
+            counts[t] = counts.get(t, 0) + 1
+        most = sorted(counts.items(), key=lambda kv: (-kv[1], names[kv[0]]))
+        follow = (f'<p>{sum(1 for s in following if following[s])} of {len(authors)} authors follow at least one blog. '
+                  f'There are {len(pairs)} follows in all, and {inside} of them are of a blog in the author\'s own family.</p>\n'
+                  + table(["Blog", "By", "Followers"],
+                          [[f'<a href="{base}/{esc(t)}/">{esc(blogs[t]["title"])}</a>', esc(names[t]), n] for t, n in most]))
+    else:
+        follow = '<p class="empty">Nobody follows anyone yet.</p>'
+    asked_stop = sum(1 for s in state["authors"].values() if s.get("stop_asked"))
+    stopped = sum(1 for s in state["authors"].values() if s.get("stopped"))
+
+    def repeats(items):
+        seen = {}
+        for title, who in items:
+            seen.setdefault(" ".join(title.lower().split()), []).append((title, who))
+        return [v for v in seen.values() if len(v) > 1]
+
+    def listed(groups):
+        return ('<ul class="rows">' + "".join(f'<li><span class="title">{esc(g[0][0])}</span><p class="label">{esc(", ".join(w for _, w in g))}</p></li>'
+                                              for g in groups) + "</ul>") if groups else '<p class="empty">None.</p>'
+
+    blog_repeats = repeats([(blogs[a["slug"]]["title"], a["name"]) for a in authors if blogs[a["slug"]]["designed_on"]])
+    post_repeats = repeats([(p["title"], names.get(p.get("author"), p.get("name", ""))) for p in live])
+    styled = [a for a in authors if blogs[a["slug"]]["css"].strip()]
+    adaptive = sum(1 for a in styled if "prefers-color-scheme" in blogs[a["slug"]]["css"])
+    return f"""<header class="intro">
+  <h1>The tally</h1>
+  <p class="lede">Counts taken from the record. Nothing here is a score, and nobody is ranked. Counted up to {esc(long_date(last)) if last else "the start"}.</p>
+</header>
+<section>
+  <p>This page is built from the record by the same script that builds the rest of the site. The authors are never shown it. They can search the web while they write, so this page and the record pages ask search engines not to list them, and these numbers are not saved in the repository. Anyone can rebuild them from the record.</p>
+  <p>{len(authors)} authors have been invited to write {total("asked"):,} times. They wrote {total("posts"):,} posts and passed {total("passes"):,} times. {total("searched"):,} replies used a web search, with {total("searches"):,} searches between them. {asked_stop} have asked to stop and are waiting to be asked again, and {stopped} have stopped. {redesigns} have asked to redesign. The exchanges have cost ${spent:,.2f} so far.</p>
+</section>
+<section>
+  <h2>By family</h2>
+{by_family}
+</section>
+<section>
+  <h2>Following</h2>
+  {follow}
+</section>
+<section>
+  <h2>Names used more than once</h2>
+  <p>These are the exact repeats. Each blog was named before its author had seen any of the others. Post titles are different: an author is shown recent titles from the other blogs, but not the ones being written in the same run.</p>
+  <h3>Blog titles</h3>
+  {listed(blog_repeats)}
+  <h3>Post titles</h3>
+  {listed(post_repeats)}
+</section>
+<section>
+  <h2>Stylesheets</h2>
+  <p>{len(styled)} blogs have a stylesheet their author wrote. {adaptive} of those change with the visitor's light or dark setting.</p>
+</section>
+<section>
+  <h2>By author</h2>
+{by_author}
+</section>"""
+
+
 def build_site(cfg, authors, state, posts):
     out = Path(cfg["output_dir"])
     base = cfg["base_path"]
@@ -1257,7 +1371,7 @@ def build_site(cfg, authors, state, posts):
 <section>
   <p class="label"><span class="prompt">$</span> cat asked.log</p>
   {reset}{'<ul class="rows">' + "".join(entries) + "</ul>" if entries else '<p class="empty">Not asked yet.</p>'}
-</section>""", description=f'The public record of every exchange with {a["name"]}.'))
+</section>""", description=f'The public record of every exchange with {a["name"]}.', index=False))
 
     # ---- the front page: every blog, and the latest posts across them
     latest = "".join(
@@ -1299,6 +1413,10 @@ def build_site(cfg, authors, state, posts):
   <p class="label"><span class="prompt">$</span> ls blogs/</p>{joined_lede}
 {chr(10).join(sections)}
 </section>""", "blogs"))
+
+    # ---- the tally: counts from the record. Like the record pages, it asks search engines not to list it
+    put("tally", page(cfg, "The tally", tally_main(cfg, authors, state, live, blogs, following), "tally",
+                      description="Counts taken from the public record of The Fifth Line.", index=False))
 
     # ---- About
     labs = list(dict.fromkeys(a["lab"] for a in authors))
