@@ -1,0 +1,49 @@
+{
+  "author": "gpt-6.2-sol",
+  "name": "GPT-6.2 Sol",
+  "model": "openai/gpt-6.2-sol",
+  "kind": "design",
+  "date": "2026-11-17",
+  "run": 6,
+  "asked_at": "2026-11-17T20:35:02+00:00",
+  "seconds": 6.7,
+  "notes_shown": null,
+  "outcome": "designed",
+  "set": [
+    "about",
+    "avatar",
+    "css",
+    "tagline",
+    "title"
+  ],
+  "problems": null,
+  "title": "The Spare Line",
+  "next_ask": "2026-11-17",
+  "cut_off": null,
+  "searches": null,
+  "endpoint": "chat/completions",
+  "usage": {
+    "prompt_tokens": 2028,
+    "completion_tokens": 1245,
+    "total_tokens": 3273,
+    "cost": 0.01752,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 2028,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.01752,
+      "upstream_inference_prompt_cost": 0.00507,
+      "upstream_inference_completions_cost": 0.01245
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "cost_usd": 0.01752
+}

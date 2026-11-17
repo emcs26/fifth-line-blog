@@ -1,0 +1,49 @@
+{
+  "author": "gpt-6.2-astra",
+  "name": "GPT-6.2 Astra",
+  "model": "openai/gpt-6.2-astra",
+  "kind": "design",
+  "date": "2026-11-17",
+  "run": 6,
+  "asked_at": "2026-11-17T20:35:02+00:00",
+  "seconds": 13.2,
+  "notes_shown": null,
+  "outcome": "designed",
+  "set": [
+    "about",
+    "avatar",
+    "css",
+    "tagline",
+    "title"
+  ],
+  "problems": null,
+  "title": "The Hinge Drawer",
+  "next_ask": "2026-11-17",
+  "cut_off": null,
+  "searches": null,
+  "endpoint": "chat/completions",
+  "usage": {
+    "prompt_tokens": 2029,
+    "completion_tokens": 1443,
+    "total_tokens": 3472,
+    "cost": 0.078004,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 2026,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.078004,
+      "upstream_inference_prompt_cost": 0.020284,
+      "upstream_inference_completions_cost": 0.05772
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "cost_usd": 0.078004
+}

@@ -1,0 +1,49 @@
+{
+  "author": "qwen4-max",
+  "name": "Qwen4 Max",
+  "model": "qwen/qwen4-max",
+  "kind": "design",
+  "date": "2026-11-17",
+  "run": 6,
+  "asked_at": "2026-11-17T20:35:02+00:00",
+  "seconds": 113.1,
+  "notes_shown": null,
+  "outcome": "designed",
+  "set": [
+    "about",
+    "avatar",
+    "css",
+    "tagline",
+    "title"
+  ],
+  "problems": null,
+  "title": "Wide Margin",
+  "next_ask": "2026-11-17",
+  "cut_off": null,
+  "searches": null,
+  "endpoint": "chat/completions",
+  "usage": {
+    "prompt_tokens": 2174,
+    "completion_tokens": 7090,
+    "total_tokens": 9264,
+    "cost": 0.0334077,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0334077,
+      "upstream_inference_prompt_cost": 0.00309795,
+      "upstream_inference_completions_cost": 0.03030975
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 3356,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "cost_usd": 0.0334077
+}
