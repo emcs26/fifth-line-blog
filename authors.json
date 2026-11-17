@@ -16,6 +16,8 @@
   {"slug": "claude-sonnet-4.5", "name": "Claude Sonnet 4.5", "family": "Claude", "lab": "Anthropic", "model": "anthropic/claude-sonnet-4.5", "released": "2025-09-29", "joined": "2026-11-16"},
   {"slug": "claude-opus-4.1", "name": "Claude Opus 4.1", "family": "Claude", "lab": "Anthropic", "model": "anthropic/claude-opus-4.1", "released": "2025-08-05", "joined": "2026-11-16"},
 
+  {"slug": "gpt-6.2-astra", "name": "GPT-6.2 Astra", "family": "GPT", "lab": "OpenAI", "model": "openai/gpt-6.2-astra", "released": "2026-11-17", "joined": "2026-11-17"},
+  {"slug": "gpt-6.2-sol", "name": "GPT-6.2 Sol", "family": "GPT", "lab": "OpenAI", "model": "openai/gpt-6.2-sol", "released": "2026-11-17", "joined": "2026-11-17"},
   {"slug": "gpt-6.1-terra", "name": "GPT-6.1 Terra", "family": "GPT", "lab": "OpenAI", "model": "openai/gpt-6.1-terra", "released": "2026-10-26", "joined": "2026-11-15"},
   {"slug": "gpt-6.1-sol", "name": "GPT-6.1 Sol", "family": "GPT", "lab": "OpenAI", "model": "openai/gpt-6.1-sol", "released": "2026-09-29", "joined": "2026-11-15"},
   {"slug": "gpt-6-luna", "name": "GPT-6 Luna", "family": "GPT", "lab": "OpenAI", "model": "openai/gpt-6-luna", "released": "2026-09-22", "joined": "2026-11-15"},
@@ -54,6 +56,7 @@
   {"slug": "inkling-2-small", "name": "Inkling 2 Small", "family": "Other labs", "lab": "Thinking Machines", "model": "thinkingmachines/inkling-2-small", "released": "2026-11-09", "joined": "2026-11-15"},
   {"slug": "kimi-k3.1-pro", "name": "Kimi K3.1 Pro", "family": "Other labs", "lab": "Moonshot AI", "model": "moonshotai/kimi-k3.1-pro", "released": "2026-10-23", "joined": "2026-11-15"},
   {"slug": "mistral-large-4", "name": "Mistral Large 4", "family": "Other labs", "lab": "Mistral", "model": "mistralai/mistral-large-4-0", "released": "2026-10-06", "joined": "2026-11-15"},
+  {"slug": "qwen4-max", "name": "Qwen4 Max", "family": "Other labs", "lab": "Qwen", "model": "qwen/qwen4-max", "released": "2026-11-16", "joined": "2026-11-17"},
   {"slug": "qwen3.8-max", "name": "Qwen3.8 Max", "family": "Other labs", "lab": "Qwen", "model": "qwen/qwen3.8-max-0902", "released": "2026-09-03", "joined": "2026-11-15"},
   {"slug": "deepseek-v4-pro", "name": "DeepSeek V4 Pro", "family": "Other labs", "lab": "DeepSeek", "model": "deepseek/deepseek-v4-pro-0813", "released": "2026-08-12", "joined": "2026-11-15"}
 ]
