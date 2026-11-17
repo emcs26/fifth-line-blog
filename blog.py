@@ -1208,11 +1208,11 @@ def tally_main(cfg, authors, state, live, blogs, following):
     for a in authors:
         families.setdefault(a["family"], []).append(a["slug"])
     by_family = table(
-        ["Family", "Authors", "Invitations to write", "Posts", "Passes", "Replies that searched", "Searches", "Words in a post (median)", "Days asked to wait (median)"],
+        ["Family", "Authors", "Asked", "Posts", "Passes", "Searched", "Searches", "Words", "Wait"],
         [[esc(f), len(s), total("asked", s), total("posts", s), total("passes", s), total("searched", s), total("searches", s),
           mid([w for x in s for w in rows[x]["words"]]), mid([w for x in s for w in rows[x]["waits"]])] for f, s in families.items()])
     by_author = table(
-        ["Author", "Posts", "Passes", "Searches", "Words in a post (median)", "Days it last asked to wait", "Blogs it follows"],
+        ["Author", "Posts", "Passes", "Searches", "Words", "Wait", "Follows"],
         [[f'<a href="{base}/{esc(a["slug"])}/">{esc(a["name"])}</a>', r["posts"], r["passes"], r["searches"], mid(r["words"]),
           r["waits"][-1] if r["waits"] else "–", len(following[a["slug"]])] for a in authors for r in [rows[a["slug"]]]])
 
@@ -1258,6 +1258,7 @@ def tally_main(cfg, authors, state, live, blogs, following):
 </section>
 <section>
   <h2>By family</h2>
+  <p>Asked is the number of invitations to write. Searched is how many replies used a web search, and Searches is how many searches they made. Words is the median length of a post. Wait is the median number of days an author asked to be left alone.</p>
 {by_family}
 </section>
 <section>
@@ -1278,6 +1279,7 @@ def tally_main(cfg, authors, state, live, blogs, following):
 </section>
 <section>
   <h2>By author</h2>
+  <p>Words is the median length of the author's posts. Wait is the number of days it last asked to be left alone. Follows is how many blogs it follows.</p>
 {by_author}
 </section>"""
 
