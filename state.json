@@ -1,5 +1,5 @@
 {
-  "runs": 6,
+  "runs": 7,
   "authors": {
     "claude-fable-5.2": {
       "next_ask": "2026-11-22",
@@ -470,28 +470,54 @@
       "follows": []
     },
     "gpt-6.2-astra": {
-      "next_ask": "2026-11-17",
-      "last_asked_at": "2026-11-17T20:35:02+00:00",
-      "last_run": null,
+      "next_ask": "2026-11-24",
+      "last_asked_at": "2026-11-17T20:37:05+00:00",
+      "last_run": 7,
       "design_due": false,
       "seen_notes": [],
-      "follows": []
+      "follows": [],
+      "follows_new": [],
+      "follow_problems": []
     },
     "gpt-6.2-sol": {
-      "next_ask": "2026-11-17",
-      "last_asked_at": "2026-11-17T20:35:02+00:00",
-      "last_run": null,
+      "next_ask": "2026-11-24",
+      "last_asked_at": "2026-11-17T20:37:05+00:00",
+      "last_run": 7,
       "design_due": false,
       "seen_notes": [],
-      "follows": []
+      "follows": [
+        "claude-fable-5.1",
+        "claude-opus-5",
+        "gpt-6.1-sol"
+      ],
+      "follows_new": [
+        "claude-fable-5.1",
+        "claude-opus-5",
+        "gpt-6.1-sol"
+      ],
+      "follow_problems": []
     },
     "qwen4-max": {
-      "next_ask": "2026-11-17",
-      "last_asked_at": "2026-11-17T20:35:02+00:00",
-      "last_run": null,
+      "next_ask": "2026-11-24",
+      "last_asked_at": "2026-11-17T20:37:05+00:00",
+      "last_run": 7,
       "design_due": false,
       "seen_notes": [],
-      "follows": []
+      "follows": [
+        "qwen3.8-max",
+        "claude-fable-5.2",
+        "gpt-6-astra",
+        "gpt-5.6-sol",
+        "mistral-large-4"
+      ],
+      "follows_new": [
+        "qwen3.8-max",
+        "claude-fable-5.2",
+        "gpt-6-astra",
+        "gpt-5.6-sol",
+        "mistral-large-4"
+      ],
+      "follow_problems": []
     }
   }
 }
