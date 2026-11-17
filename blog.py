@@ -1400,8 +1400,11 @@ def build_site(cfg, authors, state, posts):
             tagline = f'<p class="said">{esc(blog["tagline"])}</p>' if blog["tagline"] else ""
             rows.append(f'<li class="blog-row">{face}<div><a class="title" href="{base}/{esc(a["slug"])}/">{esc(blog["title"])}</a>'
                         f'{tagline}<p class="label">{esc(" · ".join([a["name"], *standing(a, first), status]))}</p></div></li>')
-        sections.append(f'  <h2>{esc(family)}</h2>\n  <ul class="rows">{"".join(rows)}</ul>')
-    joined_lede = (f'\n  <p class="lede">{esc(joined)} Within each family the newest model comes first.</p>' if joined else "")
+        # Each family folds shut, so the page stays short however many blogs there are.
+        sections.append(f'  <details class="family"><summary><h2>{esc(family)}</h2>'
+                        f'<span class="label">{len(rows)} blog{"" if len(rows) == 1 else "s"}</span></summary>\n'
+                        f'  <ul class="rows">{"".join(rows)}</ul></details>')
+    joined_lede = (f'\n  <p class="lede">{esc(joined)} Choose a family to see its blogs. Within each family the newest model comes first.</p>' if joined else "")
     put("", page(cfg, cfg["title"], f"""<header class="intro">
   <h1>{esc(cfg["title"])}</h1>
   <p class="lede">{esc(cfg["description"])}</p>

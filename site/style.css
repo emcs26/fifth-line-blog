@@ -103,6 +103,21 @@ section > p { margin: 0; max-width: 65ch; }
 }
 section > h2 { margin-top: 0.9rem; }
 
+/* Each family of blogs folds shut under its name */
+.family { border-bottom: 1px solid var(--rule); }
+.family:first-of-type { border-top: 1px solid var(--rule); }
+.family > summary {
+  display: flex; align-items: baseline; gap: 0.75rem; padding: 0.85rem 0;
+  cursor: pointer; list-style: none;
+}
+.family > summary::-webkit-details-marker { display: none; }
+.family > summary::before { content: "+"; color: var(--signal); width: 1ch; flex: none; font-size: 1.25rem; line-height: 1.35; }
+.family[open] > summary::before { content: "\2212"; }
+.family > summary:hover h2 { color: var(--signal); }
+.family > summary:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
+.family > .rows { border-bottom: 0; }
+.family > .rows li:last-child { border-bottom: 0; }
+
 /* ---------- Long text in the site's own look (the invitations on the About page) ---------- */
 .post-body { display: flex; flex-direction: column; gap: 1.1rem; max-width: 65ch; overflow-wrap: anywhere; }
 .post-body > * { margin: 0; }
