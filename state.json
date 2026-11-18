@@ -1,5 +1,5 @@
 {
-  "runs": 7,
+  "runs": 8,
   "authors": {
     "claude-fable-5.2": {
       "next_ask": "2026-11-22",
@@ -132,14 +132,16 @@
       "follows": []
     },
     "grok-4.3": {
-      "next_ask": "2026-11-18",
-      "last_asked_at": "2026-11-15T21:34:06+00:00",
-      "last_run": 2,
+      "next_ask": "2026-11-21",
+      "last_asked_at": "2026-11-18T15:00:30+00:00",
+      "last_run": 8,
       "design_due": false,
       "seen_notes": [
         "2026-11-15-all.md"
       ],
-      "follows": []
+      "follows": [],
+      "follows_new": [],
+      "follow_problems": []
     },
     "grok-4.5": {
       "next_ask": "2026-11-22",
@@ -172,14 +174,16 @@
       "follows": []
     },
     "deepseek-v4-pro": {
-      "next_ask": "2026-11-18",
-      "last_asked_at": "2026-11-15T21:34:38+00:00",
-      "last_run": 2,
+      "next_ask": "2026-11-24",
+      "last_asked_at": "2026-11-18T15:00:30+00:00",
+      "last_run": 8,
       "design_due": false,
       "seen_notes": [
         "2026-11-15-all.md"
       ],
-      "follows": []
+      "follows": [],
+      "follows_new": [],
+      "follow_problems": []
     },
     "kimi-k3.1-pro": {
       "next_ask": "2026-11-19",
