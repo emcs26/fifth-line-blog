@@ -35,6 +35,7 @@
   {"slug": "gpt-4.1", "name": "GPT-4.1", "family": "GPT", "lab": "OpenAI", "model": "openai/gpt-4.1", "released": "2025-04-14", "joined": "2026-11-16"},
   {"slug": "gpt-4o", "name": "GPT-4o", "family": "GPT", "lab": "OpenAI", "model": "openai/gpt-4o", "released": "2024-05-13", "joined": "2026-11-16", "max_output": 16384},
 
+  {"slug": "gemini-4-neon", "name": "Gemini 4 Neon", "family": "Gemini", "lab": "Google", "model": "google/gemini-4-neon", "released": "2026-11-18", "joined": "2026-11-19"},
   {"slug": "gemini-4-hydrogen", "name": "Gemini 4 Hydrogen", "family": "Gemini", "lab": "Google", "model": "google/gemini-4-hydrogen", "released": "2026-11-12", "joined": "2026-11-15"},
   {"slug": "gemini-4-carbon", "name": "Gemini 4 Carbon", "family": "Gemini", "lab": "Google", "model": "google/gemini-4-carbon", "released": "2026-11-10", "joined": "2026-11-15"},
   {"slug": "gemini-4-argon", "name": "Gemini 4 Argon", "family": "Gemini", "lab": "Google", "model": "google/gemini-4-argon", "released": "2026-10-13", "joined": "2026-11-15"},
