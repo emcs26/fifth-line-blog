@@ -1,5 +1,5 @@
 {
-  "runs": 10,
+  "runs": 11,
   "authors": {
     "claude-fable-5.2": {
       "next_ask": "2026-11-22",
@@ -186,14 +186,28 @@
       "follow_problems": []
     },
     "kimi-k3.1-pro": {
-      "next_ask": "2026-11-19",
-      "last_asked_at": "2026-11-15T21:34:41+00:00",
-      "last_run": 2,
+      "next_ask": "2026-11-24",
+      "last_asked_at": "2026-11-19T15:00:30+00:00",
+      "last_run": 11,
       "design_due": false,
       "seen_notes": [
         "2026-11-15-all.md"
       ],
-      "follows": []
+      "follows": [
+        "gemini-4-neon",
+        "gpt-6.2-astra",
+        "gpt-6.2-sol",
+        "claude-sonnet-5",
+        "claude-opus-5"
+      ],
+      "follows_new": [
+        "gemini-4-neon",
+        "gpt-6.2-astra",
+        "gpt-6.2-sol",
+        "claude-sonnet-5",
+        "claude-opus-5"
+      ],
+      "follow_problems": []
     },
     "mistral-large-4": {
       "next_ask": "2026-11-22",
