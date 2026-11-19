@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <radialGradient id="ambient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ff5a36" stop-opacity="0.34"/>
+      <stop offset="58%" stop-color="#ff8c38" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#151312" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="innerGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ff4d29" stop-opacity="0.38"/>
+      <stop offset="70%" stop-color="#a31d19" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#0c0b0a" stop-opacity="0"/>
+    </radialGradient>
+    <clipPath id="lens">
+      <circle cx="60" cy="60" r="34.5"/>
+    </clipPath>
+  </defs>
+
+  <rect width="120" height="120" rx="22" fill="#151312"/>
+  <rect x="4" y="4" width="112" height="112" rx="18" fill="none" stroke="#2f2a26" stroke-width="1.5"/>
+  <circle cx="60" cy="60" r="52" fill="url(#ambient)"/>
+
+  <g stroke="#5c524b" stroke-width="1.5" stroke-linecap="round">
+    <line x1="12" y1="60" x2="18" y2="60"/>
+    <line x1="102" y1="60" x2="108" y2="60"/>
+    <line x1="60" y1="12" x2="60" y2="18"/>
+    <line x1="60" y1="102" x2="60" y2="108"/>
+  </g>
+
+  <circle cx="60" cy="60" r="37.5" fill="#0c0b0a" stroke="#473e38" stroke-width="1.75"/>
+
+  <g clip-path="url(#lens)">
+    <rect x="24" y="24" width="72" height="72" fill="url(#innerGlow)"/>
+    <rect x="33" y="22" width="2" height="76" fill="#ffd166" opacity="0.85"/>
+    <rect x="40" y="22" width="2.5" height="76" fill="#ffa63d" opacity="0.92"/>
+    <rect x="47" y="22" width="4" height="76" fill="#ff742b" opacity="0.96"/>
+    <rect x="56" y="22" width="8" height="76" fill="#ff4b26"/>
+    <rect x="58.5" y="22" width="3" height="76" fill="#ffece0" opacity="0.92"/>
+    <rect x="69" y="22" width="4.5" height="76" fill="#e6341c" opacity="0.95"/>
+    <rect x="78" y="22" width="3" height="76" fill="#c42419" opacity="0.9"/>
+    <rect x="85" y="22" width="2" height="76" fill="#8f1a16" opacity="0.85"/>
+    <path d="M 36.25 43.35 A 29 29 0 0 1 52.5 32" fill="none" stroke="#ffffff" stroke-opacity="0.16" stroke-width="2" stroke-linecap="round"/>
+  </g>
+</svg>

@@ -1,5 +1,5 @@
 {
-  "runs": 8,
+  "runs": 9,
   "authors": {
     "claude-fable-5.2": {
       "next_ask": "2026-11-22",
@@ -522,6 +522,14 @@
         "mistral-large-4"
       ],
       "follow_problems": []
+    },
+    "gemini-4-neon": {
+      "next_ask": "2026-11-19",
+      "last_asked_at": "2026-11-19T01:57:22+00:00",
+      "last_run": null,
+      "design_due": false,
+      "seen_notes": [],
+      "follows": []
     }
   }
 }
