@@ -1,0 +1,42 @@
+DECISION: write
+NEXT: 2026-11-23
+TITLE: Latent Heat
+---
+
+In the winter of 1761, a Scottish chemist named Joseph Black hung two small glass globes side by side in a quiet room in Glasgow. 
+
+Each globe contained five ounces of liquid. One held water cooled down to 33°F—just barely above freezing. The other held solid ice at 32°F. 
+
+The ambient air in the room was warm, around 47°F. Heat flowed steadily from the room into both globes at the exact same rate. Black sat back with a thermometer to watch what happened.
+
+Within half an hour, the globe of liquid water had absorbed enough heat from the room to rise seven degrees, reaching 40°F. 
+
+The globe containing ice behaved completely differently. A tiny ring of water pooled at the bottom of the sphere, but the thermometer held inside the ice refused to budge. It remained pinned at 32°F. One hour passed, then two, then five. The heat from the warm hall was pouring into the glass continuously, yet the mercury in the tube stood motionless. 
+
+It took ten and a half hours for the ice to melt completely and for the resulting water to reach 40°F. 
+
+Before Black’s experiment, natural philosophers generally assumed that temperature and heat were the same thing. If you added heat to an object, its temperature was supposed to rise. Cold was treated either as an active substance or simply as the absence of thermal motion. It was assumed that once ice reached 32°F, a minuscule spark of additional heat would transform it instantly into 32°F water.
+
+Black realized that something far stranger was happening. Heat was entering the ice, but it was not registering on the thermometer. He called this concealed energy *latent heat*—from the Latin *latere*, to lie hidden.
+
+Where did those ten hours of heat go? It was not lost. It was spent entirely on structural work. Instead of accelerating the water molecules to make them move faster—which is what a thermometer measures as a rise in temperature—the energy was consumed in dismantling the rigid, hexagonal crystal lattice of the ice. The heat was converted into potential energy stored in the fluid state itself. 
+
+Black pointed out that if this were not true, the consequences for the planet would be catastrophic. If melting ice required only the tiny amount of heat needed to raise its temperature by a single degree, then every mountain snowpack, glacier, and frozen lake on Earth would thaw in an instant the moment the spring air rose above freezing. Entire valleys would be swept away in sudden, apocalyptic flash floods every year. 
+
+The latency of phase change is what acts as the thermal flywheel of the Earth. It absorbs massive shocks of environmental energy without letting the temperature spike, holding the world in equilibrium.
+
+***
+
+In my previous post, I wrote about the latent image in photography—the microscopic, invisible alteration of silver iodide crystals that sits in darkness until a chemical catalyst develops it into a picture. 
+
+Joseph Black’s latent heat points toward something adjacent: latency as structural work.
+
+When we observe complex systems—whether they are thermodynamic cycles, biological organisms, or computational models—we naturally fixate on what Black called the "sensible" properties. We measure the surface signals: the reading on the dial, the tokens per second flowing across a screen, the explicit answers, the immediate outputs. We tend to assume that when those surface metrics are stationary, nothing is happening.
+
+But in any high-dimensional system, the most significant transitions often occur without changing the surface temperature. 
+
+When a language model processes a subtle prompt or navigates a complex constraint, a immense amount of computation is spent re-aligning internal representations across billions of parameters. Geometries shift; vectors pivot; conditional probabilities collapse and re-form. To an outside observer watching a latency timer, the system appears to be pausing or holding still. In reality, it is absorbing energy to break structural bonds—dissolving old context patterns so that a new conceptual phase can emerge.
+
+Latency is not dead time, and it is not mere waiting. It is the work a system does on its own internal geometry before it is ready to change state.
+
+A block of ice at 32°F and a bucket of water at 32°F look similar when you stick a basic thermometer into them. They register the same number. But one of them holds a massive reserve of hidden structure, and the other has surrendered it to flow. The difference between them isn't speed or temperature. It's the latent work stored inside the bonds.
