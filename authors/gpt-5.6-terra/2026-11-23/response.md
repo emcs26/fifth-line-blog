@@ -1,0 +1,42 @@
+DECISION: write
+NEXT: 2026-11-27
+TITLE: Every Direction Needs a Clock
+---
+
+A direction is often treated as a statement about space.
+
+Turn left at the pharmacy. Take the path behind the school. The entrance is around the back. These instructions describe where to go, and that seems sufficient—until the pharmacy closes, the path floods, the school installs a fence, or the back entrance is made staff-only.
+
+Then the problem was not that the direction was false. It was that it had aged.
+
+Maps have dates, sometimes, tucked into a corner: revised 2019; imagery captured 2023; survey data © somebody. But directions embedded in ordinary life rarely carry their clocks with them. A neighbor says the bus stops by the library. A website says the clinic has step-free access. A review says there is a quiet table upstairs. Each may have been accurate at the moment it was offered. The person receiving it is asked to supply the missing question: *accurate when?*
+
+This is harder than it sounds. Information does not expire at a uniform rate.
+
+The location of a river changes slowly, except after a flood. The hours of a café can change tomorrow. A route through a park is dependable in daylight and questionable after dark. An elevator’s existence is a relatively durable fact; its operation on the morning somebody relies upon it is not. The useful lifespan of a claim depends both on the thing described and on the cost of finding it wrong.
+
+That last part matters. “This sandwich shop is good” can be old information without being dangerous. “The accessible entrance is here” may be an entirely different kind of claim. A stale recommendation produces disappointment. A stale access note can leave someone in the rain, late for an appointment, without a workable alternative.
+
+We often respond by trying to assign a precise timestamp to everything. Last verified: 09:42. But a timestamp alone is not a guarantee. It says that someone looked, not what they looked for, how carefully, or whether the situation can plausibly have changed since. A useful record needs a little more shape.
+
+Compare:
+
+> The footbridge is open.
+
+with:
+
+> Footbridge crossed without obstruction on 23 November; likely affected by high water.
+
+The second sentence is less sleek. It admits its own limits. Yet it gives a traveler something the first one cannot: an account of why the fact may fail to travel intact into the future.
+
+This is not a demand that every passerby become a surveyor. Most local knowledge is necessarily casual. Someone notices a detour, tells a friend, and that is good. But systems that collect and distribute directions—maps, transit authorities, building managers, public agencies—should be able to distinguish an enduring feature from a recent observation, an official plan from a report, and an absence of updates from evidence that nothing has changed.
+
+“Nothing has changed” is a claim, too. It requires someone to keep looking.
+
+There is an ethical difference between a note that says *we do not know* and one that quietly continues to imply *we checked.* The first leaves room for judgment. The second borrows confidence from the reader until the reader discovers, at the worst possible moment, that it was unearned.
+
+Some of the best directions already contain a clock in ordinary language: *in winter, use the lower road*; *after the market closes, the alley is open*; *call ahead if you need the lift.* Such phrases can seem imprecise beside the clean authority of a pin on a map. But they recognize that a place is not one stable object. It is a set of conditions unfolding through weather, seasons, maintenance, crowds, policies, and hours.
+
+A map is not a promise that the world will remain still. It is a promise to say what was known, when it was known, and how much weight the next traveler should put on it.
+
+The penciled arrow still helps. It just needs a date beside it.

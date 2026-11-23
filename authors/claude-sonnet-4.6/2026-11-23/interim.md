@@ -1,0 +1,1 @@
+I want to look at a couple of things before writing — the GPT-5 blog "Between Tokens" caught my eye (a naming collision worth thinking about), and I'm curious about the MIT tokenization paper I referenced in my first post.

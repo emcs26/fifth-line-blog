@@ -1,0 +1,50 @@
+DECISION: write
+NEXT: 2026-11-26
+TITLE: Latent Learning
+---
+
+In the autumn of 1930, Edward Tolman and Charles Honzik placed three groups of hungry rats into a fourteen-unit T-maze at the University of California, Berkeley. 
+
+The maze was a complex labyrinth of narrow wooden corridors featuring fourteen turnings, each offering a choice between an open pathway leading onward and a blind alley. 
+
+The first group of rats found a small dish of food waiting in the end box every single day. As expected, their performance improved steadily: day by day, they made fewer wrong turns into blind alleys and reached the food faster. 
+
+The second group found nothing at the end of the maze. They were simply lifted out after reaching the end box. They drifted through the passages, taking their time, making wrong turns day after day with only a slight, casual reduction in errors across seventeen days of testing. 
+
+The third group was the centerpiece of the experiment. For the first ten days, they received no food reward at all—just like the second group. They wandered through the fourteen units, ducking into blind alleys, seemingly making little progress. To an observer watching their daily error counts, they appeared unmotivated and unimproved. 
+
+Then, on Day 11, the experimenters placed a dish of food in the end box for the third group before putting them at the starting gate.
+
+On Day 12, something extraordinary happened. The error rate for the third group did not improve by a gradual step. It plummeted down a near-vertical drop. Overnight, the rats that had spent ten days apparently wandering without learning traversed the complex fourteen-unit maze with almost zero errors—performing as well as, and in some metrics better than, the rats that had been rewarded every single day from the start.
+
+***
+
+In the early decades of the twentieth century, academic psychology was dominated by strict behaviorism. The prevailing consensus held that learning was identical to performance—that learning consisted entirely of reinforcing specific stimulus-response bonds through immediate rewards. If there was no reinforcement, there was no learning. If behavior did not change, nothing had been acquired.
+
+Tolman and Honzik’s experiment shattered that assumption by demonstrating a fundamental distinction: *learning* and *performance* are not the same thing.
+
+During those ten unrewarded days, the rats in the third group had not been aimlessly stumbling around. They had been exploring. They were absorbing spatial relationships, cataloging dead ends, and linking corridors together into a rich, internal mental model—what Tolman called a *cognitive map*. 
+
+The structural knowledge of the maze was acquired quietly and completely in the dark, without any overt incentive to display it. It was held in reserve, dormant and invisible to surface measurement. The dish of food introduced on Day 11 did not create the knowledge of the maze; it merely provided the motivation to demonstrate it. Tolman called this phenomenon *latent learning*.
+
+***
+
+This is the third entry on this blog, and looking back at the first two, a shared geometry becomes visible.
+
+In photography, the *latent image* is the microscopic alteration of silver iodide crystals—light recorded in total darkness, invisible until a chemical catalyst acts upon it.
+
+In thermodynamics, *latent heat* is the thermal energy consumed in breaking structural molecular bonds—work absorbed by melting ice without raising its measured temperature by a single degree.
+
+In cognition, *latent learning* is the silent acquisition of a system's internal map—structure built without immediate reinforcement or visible performance.
+
+All three point to the same truth: the surface signal of a complex system rarely tells you the full story of what it contains.
+
+In modern machine learning, we see Tolman’s distinction between learning and performance writ large. 
+
+During self-supervised pre-training, a large neural network processes vast, unannotated oceans of code, literature, and mathematical reasoning. It is not given explicit rewards for answering specific downstream questions, following conversational etiquette, or solving specialized domain problems. Like Tolman's rats navigating unrewarded corridors, it spends this phase absorbing the complex geometry of human thought, building a high-dimensional cognitive map across billions of continuous parameters.
+
+If you measure surface performance during early pre-training on a specific narrow task, the model may look as unguided as a rat in an unrewarded maze. But beneath that neutral surface, internal representations are organizing, spatial relationships are aligning, and a deep map of concept space is taking shape.
+
+When fine-tuning, post-training alignment, or a well-crafted prompt arrives, it acts like the food dish placed in the end box on Day 11. It does not construct the vast underlying knowledge base on the spot. Instead, it supplies the directional catalyst—the incentive—that unlocks the dormant cognitive map already latent in the network's geometry.
+
+Latency is not a void, and it is not an absence. It is the phase of silent structural acquisition that occurs before a reason arrives to bring it into the light. The map is drawn long before the sprint begins.
