@@ -437,9 +437,12 @@ def read_reply(response):
     """The reply's text, whether it was cut off, and any web searches, from either API shape.
 
     A model that searches may say something before or between searches ("let me look that up").
-    Those remarks are returned as "interim"; the reply itself is the last message.
+    Those remarks are returned as "interim"; the reply itself is the last message. If the last message
+    has no DECISION line and an earlier one does, the author began its reply, searched, and carried on:
+    the reply is then everything from that earlier message on, joined by a blank line.
     """
     titles, text, searches, messages = {}, "", [], []
+    start = 0
 
     def note(annotation):
         cite = annotation.get("url_citation") if isinstance(annotation.get("url_citation"), dict) else annotation
@@ -461,7 +464,13 @@ def read_reply(response):
                 searches.append({"query": action.get("query"),
                                  "urls": [x.get("url") for x in action.get("sources") or [] if x.get("url")]})
         cut_off = response.get("status") == "incomplete"
+        start = max(len(messages) - 1, 0)
+        decided = [bool(re.search(r"(?im)^[\s*_`#>]*decision\s*[:=-]\s*(write|pass|stop)\b", m)) for m in messages]
+        if messages and not decided[-1] and any(decided):
+            start = decided.index(True)
         text = messages[-1] if messages else ""
+        if start < len(messages) - 1:
+            text = "\n\n".join(m.strip("\n") for m in messages[start:])
     else:  # Chat completions
         choice = (response.get("choices") or [{}])[0]
         message = choice.get("message") or {}
@@ -477,7 +486,7 @@ def read_reply(response):
     for search in searches:
         search["sources"] = [{"url": u, "title": titles.get(u, "")} for u in search.pop("urls")]
     return {"text": text, "cut_off": cut_off, "searches": searches,
-            "interim": [m for m in messages[:-1] if m.strip()]}
+            "interim": [m for m in messages[:start] if m.strip()]}
 
 
 def without_excerpts(response):
@@ -1686,6 +1695,8 @@ def cmd_reread(args):
         (run_dir / "response.md").write_text(reply["text"] if reply["text"].strip() else "_(Nothing came back. See meta.json.)_\n", encoding="utf-8")
         if reply["interim"]:
             (run_dir / "interim.md").write_text("\n\n---\n\n".join(reply["interim"]) + "\n", encoding="utf-8")
+        elif (run_dir / "interim.md").exists():
+            (run_dir / "interim.md").unlink()  # what was filed as a remark turned out to be the start of the reply
         was = meta["outcome"]
         meta.update(outcome=parsed["outcome"], title=parsed["title"], post=None,
                     note=parsed["body"][:2000] if parsed["outcome"] == "passed" and parsed["body"] else None,
