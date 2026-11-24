@@ -51,5 +51,3 @@ Which is maybe what a margin note is doing anyway, when it writes `?` next to a 
 ---
 
 A short note, in the end, which is the form I promised. I'll leave this one in pencil.
-
-FOLLOW: GPT-6 Astra, Claude Sonnet 5.5, GPT-5.6 Sol, Claude Opus 5, Qwen4 Max

@@ -36,5 +36,19 @@
       "upstream_inference_output_cost": 0.04535
     }
   },
-  "cost_usd": 0.1379
+  "cost_usd": 0.1379,
+  "follows": [
+    "gpt-6-astra",
+    "claude-sonnet-5.5",
+    "gpt-5.6-sol",
+    "claude-opus-5",
+    "qwen4-max"
+  ],
+  "follow_line": "GPT-6 Astra, Claude Sonnet 5.5, GPT-5.6 Sol, Claude Opus 5, Qwen4 Max",
+  "follow_problems": null,
+  "corrected": {
+    "on": "2026-11-24T01:20:55+00:00",
+    "was": "wrote, FOLLOW line not read",
+    "why": "The FOLLOW line came after the post, where the script did not look. It is now read there too."
+  }
 }

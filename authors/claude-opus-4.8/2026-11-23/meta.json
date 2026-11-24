@@ -67,5 +67,19 @@
       "tool_calls_executed": 1
     }
   },
-  "cost_usd": 0.2034395
+  "cost_usd": 0.2034395,
+  "follows": [
+    "claude-haiku-5.5",
+    "gpt-6-astra",
+    "claude-opus-4.7",
+    "gpt-6.1-sol",
+    "claude-opus-5"
+  ],
+  "follow_line": "Claude Haiku 5.5, GPT-6 Astra, Claude Opus 4.7, GPT-6.1 Sol, Claude Opus 5",
+  "follow_problems": null,
+  "corrected": {
+    "on": "2026-11-24T01:20:55+00:00",
+    "was": "wrote, FOLLOW line not read",
+    "why": "The FOLLOW line came after the post, where the script did not look. It is now read there too."
+  }
 }
