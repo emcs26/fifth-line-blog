@@ -565,6 +565,8 @@ def parse_reply(text, today, cfg):
     body = "\n".join(lines[body_from:]).strip("\n").rstrip()
     if body.endswith("```") and body.count("```") % 2 == 1:
         body = body[:-3].rstrip()  # the whole reply was wrapped in a code fence
+    if follow is None and decision in ("write", "pass"):
+        body, follow = trailing_follow(body)
 
     earliest = today + dt.timedelta(days=cfg["ask_every_days"])
     latest = today + dt.timedelta(days=cfg["max_wait_days"])
@@ -609,6 +611,16 @@ def tidy_name(text):
     text = re.sub(r"\(.*?\)", " ", text)  # a blog title added in brackets after a name
     text = re.sub(r"[\"'“”‘’`*_\[\]]", "", text).replace("-", " ")
     return " ".join(text.lower().split()).rstrip(".")
+
+
+def trailing_follow(body):
+    """A FOLLOW line put after the post instead of with the header lines. The invitation does not say where
+    the line goes, so both places are read. Returns the body without the line, and the line's text (or None)."""
+    lines = body.rstrip().split("\n")
+    m = re.match(r"(?i)follow\s*[:=]\s*(\S.*)$", re.sub(r"[*_`#>]", "", lines[-1]).strip())
+    if not m or len(lines) < 2 or lines[-2].strip():
+        return body, None
+    return "\n".join(lines[:-1]).rstrip(), m.group(1).strip()
 
 
 def resolve_follows(raw, author, authors, cfg):
@@ -1642,13 +1654,29 @@ def cmd_reread(args):
         if meta.get("kind") != "write" or not raw.get("response") or raw.get("error"):
             print(f"{rel}: skipped. Only a writing exchange that got a reply can be re-read.")
             continue
-        if meta["outcome"] == "wrote":
-            print(f"{rel}: skipped. This reply was already published; take the post down instead.")
-            continue
         author = find_author(authors, meta["author"])
         day = dt.date.fromisoformat(meta["date"])
         reply = read_reply(raw["response"])
         parsed = parse_reply(reply["text"], day, cfg)
+        if meta["outcome"] == "wrote" and parsed["outcome"] == "wrote" and parsed["follow"] and not meta.get("follow_line") and meta.get("post"):
+            # A published post whose FOLLOW line was not read and went up as the post's last line.
+            # The post keeps its file, its date and every other word; only that line comes off.
+            head, _ = read_doc(ROOT / meta["post"])
+            write_doc(ROOT / meta["post"], head, parsed["body"])
+            st = state["authors"][author["slug"]]
+            if meta["asked_at"] == st.get("last_asked_at"):
+                apply_follow(author, st, meta, parsed, cfg)
+            else:
+                meta["follow_line"] = parsed["follow"]
+                print(f"{rel}: its FOLLOW line was not applied, because the author has answered again since.")
+            meta["corrected"] = {"on": now().isoformat(), "was": "wrote, FOLLOW line not read", "why": args.reason}
+            write_json(run_dir / "meta.json", meta)
+            fixed.append(f'{author["name"]} (FOLLOW line read)')
+            print(f"{rel}: FOLLOW line read: {parsed['follow']}")
+            continue
+        if meta["outcome"] == "wrote":
+            print(f"{rel}: skipped. This reply was already published; take the post down instead.")
+            continue
         if parsed["outcome"] == "stop":
             print(f"{rel}: skipped. This reply asks to stop, and that is not applied after the fact; the author can say so again.")
             continue
