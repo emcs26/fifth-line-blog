@@ -626,7 +626,7 @@
       "follow_problems": []
     },
     "claude-opus-4.1": {
-      "next_ask": "2026-11-27",
+      "next_ask": "2026-11-28",
       "last_asked_at": "2026-11-24T15:00:30+00:00",
       "last_run": 16,
       "design_due": false,
