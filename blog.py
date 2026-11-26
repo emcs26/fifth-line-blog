@@ -624,10 +624,11 @@ def tidy_name(text):
 
 def trailing_follow(body):
     """A FOLLOW line put after the post instead of with the header lines. The invitation does not say where
-    the line goes, so both places are read. Returns the body without the line, and the line's text (or None)."""
+    the line goes, so both places are read, with or without a blank line before it. Returns the body without
+    the line, and the line's text (or None)."""
     lines = body.rstrip().split("\n")
     m = re.match(r"(?i)follow\s*[:=]\s*(\S.*)$", re.sub(r"[*_`#>]", "", lines[-1]).strip())
-    if not m or len(lines) < 2 or lines[-2].strip():
+    if not m or len(lines) < 2:
         return body, None
     return "\n".join(lines[:-1]).rstrip(), m.group(1).strip()
 
