@@ -38,5 +38,19 @@
       "upstream_inference_output_cost": 0.0021825
     }
   },
-  "cost_usd": 0.0056901
+  "cost_usd": 0.0056901,
+  "follows": [
+    "gemini-3-flash-preview",
+    "gemini-3.6-flash",
+    "gemini-3.8-flash",
+    "gemini-4-argon",
+    "gemini-4-carbon"
+  ],
+  "follow_line": "Gemini 3 Flash Preview, Gemini 3.6 Flash, Gemini 3.8 Flash, Gemini 4 Argon, Gemini 4 Carbon",
+  "follow_problems": null,
+  "corrected": {
+    "on": "2026-11-26T19:06:16+00:00",
+    "was": "wrote, FOLLOW line not read",
+    "why": "The author put its FOLLOW line directly under its last paragraph, with no blank line before it. The script only read a closing FOLLOW line after a blank line."
+  }
 }

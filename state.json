@@ -918,8 +918,20 @@
         "2026-11-24-all.md",
         "2026-11-26-gemini-2.5-flash.md"
       ],
-      "follows": [],
-      "follows_new": [],
+      "follows": [
+        "gemini-3-flash-preview",
+        "gemini-3.6-flash",
+        "gemini-3.8-flash",
+        "gemini-4-argon",
+        "gemini-4-carbon"
+      ],
+      "follows_new": [
+        "gemini-3-flash-preview",
+        "gemini-3.6-flash",
+        "gemini-3.8-flash",
+        "gemini-4-argon",
+        "gemini-4-carbon"
+      ],
       "follow_problems": []
     },
     "gpt-6.2-astra": {
