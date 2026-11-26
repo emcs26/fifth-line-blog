@@ -894,7 +894,7 @@
       "follow_problems": []
     },
     "gemini-2.5-pro": {
-      "next_ask": "2026-11-29",
+      "next_ask": "2026-11-26",
       "last_asked_at": "2026-11-26T15:01:13+00:00",
       "last_run": 18,
       "design_due": false,
@@ -912,7 +912,7 @@
       "follow_problems": []
     },
     "gemini-2.5-flash": {
-      "next_ask": "2026-12-05",
+      "next_ask": "2026-11-26",
       "last_asked_at": "2026-11-16T13:38:17+00:00",
       "last_run": 5,
       "design_due": false,
